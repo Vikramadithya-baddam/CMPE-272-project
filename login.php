@@ -1,33 +1,22 @@
 <?php
 // ============================================================
 // PARADOX SYSTEMS — login.php
-// Admin Authentication using PHP Sessions + password_verify()
-// Method: POST form → PHP checks credentials → session set
-// session_start() MUST be the very first thing — before any output
+// PHP Session-based admin authentication
+// session_start() must be first — before any HTML output
 // ============================================================
 session_start();
 
-// ── Admin Credentials ────────────────────────────────────────
-// Username : admin
-// Password : Paradox@2025
-//
-// The password is stored as a bcrypt hash using PHP PASSWORD_DEFAULT.
-// To change the password, generate a new hash by running:
-//   php -r "echo password_hash('YourNewPassword', PASSWORD_DEFAULT);"
-// Then replace ADMIN_PASS_HASH below with the output.
-//
-// Hash below = password_hash('Paradox@2025', PASSWORD_DEFAULT)
-// ─────────────────────────────────────────────────────────────
-define('ADMIN_USER', 'admin');
-define('ADMIN_PASS_HASH', '$2y$10$YQlxOHFGg.9h8nEJy0NXOO9N4IF.5k7zJ0gxR02TqH.wqfHSK5pQO');
+// ── Admin credentials (plaintext — one hardcoded admin) ──────
+$admin_user = 'admin';
+$admin_pass = 'Paradox@2025';
 
-// ── If already logged in → redirect straight to secure page ──
-if (isset($_SESSION['paradox_admin']) && $_SESSION['paradox_admin'] === true) {
+// ── Already logged in? Skip login page ───────────────────────
+if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
     header('Location: secure.php');
     exit;
 }
 
-// ── Handle POST login attempt ─────────────────────────────────
+// ── Handle login form submission ──────────────────────────────
 $error   = '';
 $attempt = false;
 
@@ -36,21 +25,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
-    if (empty($username) || empty($password)) {
-        $error = 'Both fields are required.';
-    } elseif ($username !== ADMIN_USER) {
-        // Intentionally vague — don't reveal which field is wrong
-        $error = 'Invalid credentials. Access denied.';
-    } elseif (!password_verify($password, ADMIN_PASS_HASH)) {
-        $error = 'Invalid credentials. Access denied.';
-    } else {
-        // ✅ Authentication successful
-        session_regenerate_id(true); // Prevent session fixation
-        $_SESSION['paradox_admin']    = true;
-        $_SESSION['paradox_user']     = $username;
-        $_SESSION['paradox_login_ts'] = time();
+    if ($username === $admin_user && $password === $admin_pass) {
+        // ✅ Correct credentials — set session and redirect
+        $_SESSION['admin_logged_in'] = true;
+        $_SESSION['admin_user']      = $username;
         header('Location: secure.php');
         exit;
+    } else {
+        // ❌ Wrong credentials
+        $error = 'Invalid credentials. Access denied.';
     }
 }
 ?>

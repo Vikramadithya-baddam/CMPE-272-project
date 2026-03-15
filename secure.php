@@ -3,26 +3,16 @@
 // PARADOX SYSTEMS — secure.php
 // Protected admin dashboard — requires active session.
 // Reads registered users from data/users.txt
-// session_start() MUST be first — before any HTML output
+// session_start() must be first — before any HTML output
 // ============================================================
 session_start();
 
 // ── Session guard ─────────────────────────────────────────────
-// If not authenticated, boot to login page immediately.
-if (!isset($_SESSION['paradox_admin']) || $_SESSION['paradox_admin'] !== true) {
+// If admin is not logged in, redirect to login page immediately.
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: login.php');
     exit;
 }
-
-// ── Session timeout (30 minutes of inactivity) ────────────────
-$timeout = 1800; // seconds
-if (isset($_SESSION['paradox_login_ts']) && (time() - $_SESSION['paradox_login_ts']) > $timeout) {
-    session_destroy();
-    header('Location: login.php?reason=timeout');
-    exit;
-}
-// Refresh activity timestamp
-$_SESSION['paradox_login_ts'] = time();
 
 // ── Read users from data/users.txt ───────────────────────────
 function load_users($filepath) {
@@ -64,8 +54,8 @@ $active   = count(array_filter($users, fn($u) => ($u['status'] ?? '') === 'Activ
 $inactive = $total - $active;
 $by_role  = array_count_values(array_column($users, 'role'));
 
-$admin_name = $_SESSION['paradox_user'] ?? 'admin';
-$login_time = date('Y-m-d H:i:s', $_SESSION['paradox_login_ts'] ?? time());
+$admin_name = $_SESSION['admin_user'] ?? 'admin';
+$login_time = date('Y-m-d H:i:s', time());
 ?>
 <!DOCTYPE html>
 <html lang="en">
