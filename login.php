@@ -1,9 +1,9 @@
-<!DOCTYPE html>
 <?php
 // ============================================================
 // PARADOX SYSTEMS — login.php
 // Admin Authentication using PHP Sessions + password_verify()
 // Method: POST form → PHP checks credentials → session set
+// session_start() MUST be the very first thing — before any output
 // ============================================================
 session_start();
 
@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -273,7 +274,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Terminal prompt -->
     <div class="terminal-header">
-      <div><span class="t-prompt">root@paradox:~$</span> <span class="t-cmd">ssh admin@secure.paradox.internal</span></div>
+      <div><span class="t-prompt">root@paradox:~$</span> <span class="t-cmd">ssh <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="92f3f6fffbfcd2e1f7f1e7e0f7bce2f3e0f3f6fdeabcfbfce6f7e0fcf3fe">[email&#160;protected]</a></span></div>
       <div><span class="t-prompt"> </span> <span style="color:var(--gold);">Authenticating... Enter credentials to proceed.</span></div>
     </div>
 
@@ -343,12 +344,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="login-footer">
       <a href="index.html">
         <i class="fa-solid fa-arrow-left"></i> Return to Public Site
-      </a>
-    </div>
-
-  </div><!-- /.login-box -->
-</div><!-- /.login-wrap -->
-
-<script src="js/main.js" defer></script>
-</body>
-</html>

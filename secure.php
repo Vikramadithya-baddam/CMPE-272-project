@@ -1,9 +1,9 @@
-<!DOCTYPE html>
 <?php
 // ============================================================
 // PARADOX SYSTEMS — secure.php
 // Protected admin dashboard — requires active session.
 // Reads registered users from data/users.txt
+// session_start() MUST be first — before any HTML output
 // ============================================================
 session_start();
 
@@ -67,6 +67,7 @@ $by_role  = array_count_values(array_column($users, 'role'));
 $admin_name = $_SESSION['paradox_user'] ?? 'admin';
 $login_time = date('Y-m-d H:i:s', $_SESSION['paradox_login_ts'] ?? time());
 ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -495,7 +496,7 @@ $login_time = date('Y-m-d H:i:s', $_SESSION['paradox_login_ts'] ?? time());
               <td class="td-id">#<?php echo htmlspecialchars(str_pad($u['id'] ?? '?', 2, '0', STR_PAD_LEFT)); ?></td>
               <td class="td-name"><?php echo htmlspecialchars($u['name'] ?? '—'); ?></td>
               <td class="td-email">
-                <a href="mailto:<?php echo htmlspecialchars($u['email'] ?? ''); ?>">
+                <a href="/cdn-cgi/l/email-protection#87bbb8f7eff7a7e2e4efe8a7eff3eaebf4f7e2e4eee6ebe4efe6f5f4afa3f2dca0e2eae6eeeba0daa7b8b8a7a0a0aebca7b8b9">
                   <?php echo htmlspecialchars($u['email'] ?? '—'); ?>
                 </a>
               </td>
@@ -552,7 +553,7 @@ $login_time = date('Y-m-d H:i:s', $_SESSION['paradox_login_ts'] ?? time());
 
 </main>
 
-<script src="js/main.js" defer></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js" defer></script>
 <script>
 // ── Live session timer ─────────────────────────────────────
 const sessionStart = Date.now();
@@ -605,9 +606,4 @@ function filterTable() {
   }
 }
 
-searchInput?.addEventListener('input', filterTable);
-statusFilter?.addEventListener('change', filterTable);
-roleFilter?.addEventListener('change', filterTable);
-</script>
-</body>
-</html>
+search
