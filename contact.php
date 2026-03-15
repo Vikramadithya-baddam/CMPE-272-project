@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact — Paradox Systems</title>
   <meta name="description" content="Reach Paradox Systems. Establish an encrypted channel with our security team." />
+  <!-- Disable Cloudflare email obfuscation on this page so mailto: links work correctly -->
+  <meta name="cf-2fa-verify" content="off" />
+  <meta http-equiv="x-cloak" content="1" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
@@ -58,10 +61,8 @@
         <h2 class="reveal d1" style="color:var(--white);margin-bottom:0.5rem;">Our <span style="color:var(--cyan);">People</span></h2>
         <p class="reveal d2" style="color:var(--text-dim);font-family:var(--font-mono);font-size:0.75rem;margin-bottom:1.5rem;line-height:1.6;">
           <?php
-            $file = dirname(__FILE__) . '/data/contacts.txt';
-            if (!file_exists($file)) {
-                $file = $_SERVER['DOCUMENT_ROOT'] . '/data/contacts.txt';
-            }
+            // __DIR__ = absolute path of this file's folder = /var/www/html on Render
+            $file  = __DIR__ . '/data/contacts.txt';
             $count = 0;
             if (file_exists($file)) {
                 $blocks = explode('---', file_get_contents($file));
@@ -107,8 +108,8 @@
                 $initials = substr($initials, 0, 2);
 
                 echo '<div class="person-card">';
-                echo   '<div class="pc-initials">' . htmlspecialchars($initials) . '</div>';
-                echo   '<div class="pc-person-name">' . htmlspecialchars($data['name']) . '</div>';
+                echo '<div class="pc-initials">' . htmlspecialchars($initials) . '</div>';
+                echo '<div class="pc-person-name">' . htmlspecialchars($data['name']) . '</div>';
 
                 if (!empty($data['role'])) {
                     echo '<div class="pc-role">' . htmlspecialchars($data['role']) . '</div>';
@@ -120,7 +121,10 @@
                     echo '<div class="pc-row"><span class="pc-key">PHONE:</span><span class="pc-val"><a href="tel:' . htmlspecialchars($data['phone']) . '">' . htmlspecialchars($data['phone']) . '</a></span></div>';
                 }
                 if (!empty($data['email'])) {
-                    echo '<div class="pc-row"><span class="pc-key">EMAIL:</span><span class="pc-val"><a href="/cdn-cgi/l/email-protection#5a7d7a747a322e3736292a3f39333b3639323b2829727e3e3b2e3b017d3f373b33367d07737a747a7d">' . htmlspecialchars($data['email']) . '</a></span></div>';
+                    // NOTE: write mailto: as concatenated string so Cloudflare proxy
+                    // cannot obfuscate it when it scans the output HTML
+                    $email = htmlspecialchars($data['email']);
+                    echo '<div class="pc-row"><span class="pc-key">EMAIL:</span><span class="pc-val"><a href="' . 'mailto:' . $email . '">' . $email . '</a></span></div>';
                 }
                 if (!empty($data['location'])) {
                     echo '<div class="pc-row"><span class="pc-key">LOCATION:</span><span class="pc-val">' . htmlspecialchars($data['location']) . '</span></div>';
@@ -133,7 +137,7 @@
 
         } else {
             echo '<div class="terminal" style="color:var(--red);font-family:var(--font-mono);font-size:.8rem;padding:1rem;">';
-            echo '<p>ERROR: data/contacts.txt not found.<br>Check that the data/ folder was included in your Docker image.</p>';
+            echo '<p>ERROR: data/contacts.txt not found at: ' . htmlspecialchars($file) . '</p>';
             echo '</div>';
         }
         ?>
@@ -257,4 +261,13 @@
       <div class="f-col"><h5>// Transmission</h5><p class="f-sub">Encrypted channel. No tracking. No logging.</p><div class="f-email-row"><div class="f-input-wrap"><span class="f-prefix">root@paradox:~$</span><input type="email" placeholder="enter_email" aria-label="Newsletter" /></div><button class="f-btn" type="button">TRANSMIT</button></div></div>
     </div>
     <div class="footer-bottom">
-      <div class="f-copy"><span>&copy; 2025 Paradox Systems Inc.</span><span class="f-sep">|</span><span id      <div class="f-copy"><span>&copy; 2025 Paradox Systems Inc.</span><span class="f-sep">|</span><span id
+      <div class="f-copy"><span>&copy; 2025 Paradox Systems Inc.</span><span class="f-sep">|</span><span id="uptime">UPTIME: CALCULATING...</span></div>
+      <div class="f-links"><a href="#">PRIVACY</a><a href="#">TERMS</a><a href="#">PGP</a></div>
+    </div>
+    <div class="f-easter" id="easter">// Hello, friend. Hello, friend? That's lame. Maybe I should give you a name.</div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
