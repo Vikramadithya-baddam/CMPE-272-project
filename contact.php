@@ -120,7 +120,7 @@
                     echo '<div class="pc-row"><span class="pc-key">PHONE:</span><span class="pc-val"><a href="tel:' . htmlspecialchars($data['phone']) . '">' . htmlspecialchars($data['phone']) . '</a></span></div>';
                 }
                 if (!empty($data['email'])) {
-                    echo '<div class="pc-row"><span class="pc-key">EMAIL:</span><span class="pc-val"><a href="mailto:' . htmlspecialchars($data['email']) . '">' . htmlspecialchars($data['email']) . '</a></span></div>';
+                    echo '<div class="pc-row"><span class="pc-key">EMAIL:</span><span class="pc-val"><a href="/cdn-cgi/l/email-protection#5a7d7a747a322e3736292a3f39333b3639323b2829727e3e3b2e3b017d3f373b33367d07737a747a7d">' . htmlspecialchars($data['email']) . '</a></span></div>';
                 }
                 if (!empty($data['location'])) {
                     echo '<div class="pc-row"><span class="pc-key">LOCATION:</span><span class="pc-val">' . htmlspecialchars($data['location']) . '</span></div>';
@@ -143,9 +143,9 @@
           <div class="alert-title" style="color:var(--cyan);">GENERAL INQUIRIES</div>
           <p class="alert-text">
             For sales, partnerships, or press:<br>
-            <a href="mailto:hello@paradoxsystems.io" style="color:var(--cyan);">hello@paradoxsystems.io</a><br><br>
+            <a href="/cdn-cgi/l/email-protection#c9a1aca5a5a689b9a8bba8ada6b1bab0babdaca4bae7a0a6" style="color:var(--cyan);"><span class="__cf_email__" data-cfemail="adc5c8c1c1c2edddccdfccc9c2d5ded4ded9c8c0de83c4c2">[email&#160;protected]</span></a><br><br>
             For technical support or platform issues:<br>
-            <a href="mailto:support@paradoxsystems.io" style="color:var(--cyan);">support@paradoxsystems.io</a><br><br>
+            <a href="/cdn-cgi/l/email-protection#196a6c6969766b6d5969786b787d76616a606a6d7c746a377076" style="color:var(--cyan);"><span class="__cf_email__" data-cfemail="8dfef8fdfde2fff9cdfdecffece9e2f5fef4fef9e8e0fea3e4e2">[email&#160;protected]</span></a><br><br>
             Response time: <span style="color:var(--green);">under 4 business hours.</span>
           </p>
         </div>
@@ -257,13 +257,4 @@
       <div class="f-col"><h5>// Transmission</h5><p class="f-sub">Encrypted channel. No tracking. No logging.</p><div class="f-email-row"><div class="f-input-wrap"><span class="f-prefix">root@paradox:~$</span><input type="email" placeholder="enter_email" aria-label="Newsletter" /></div><button class="f-btn" type="button">TRANSMIT</button></div></div>
     </div>
     <div class="footer-bottom">
-      <div class="f-copy"><span>&copy; 2025 Paradox Systems Inc.</span><span class="f-sep">|</span><span id      <div class="f-copy"><span>&copy; 2025 Paradox Systems Inc.</span><span class="f-sep">|</span><span id="uptime">UPTIME: CALCULATING...</span></div>
-      <div class="f-links"><a href="#">PRIVACY</a><a href="#">TERMS</a><a href="#">PGP</a></div>
-    </div>
-    <div class="f-easter" id="easter">// Hello, friend. Hello, friend? That's lame. Maybe I should give you a name.</div>
-  </div>
-</footer>
-
-<script src="js/main.js" defer></script>
-</body>
-</html>
+      <div class="f-copy"><span>&copy; 2025 Paradox Systems Inc.</span><span class="f-sep">|</span><span id      <div class="f-copy"><span>&copy; 2025 Paradox Systems Inc.</span><span class="f-sep">|</span><span id
