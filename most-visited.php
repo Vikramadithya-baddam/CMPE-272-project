@@ -1,6 +1,13 @@
 <?php
 require_once 'cookie_handler.php';
 
+// Handle reset
+if (isset($_GET['reset']) && $_GET['reset'] === '1') {
+    reset_cookies();
+    header('Location: most-visited.php?cleared=1');
+    exit;
+}
+
 $top5    = get_most_visited(5);
 $catalog = get_catalog();
 $visits  = read_visits();
@@ -173,9 +180,21 @@ $total_visits = array_sum($visits);
     <?php endif; ?>
 
     <div style="display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;" class="reveal">
-      <a href="products.php"        class="btn btn-filled"><i class="fa-solid fa-grid-2"></i> All Products</a>
+      <a href="products.php"         class="btn btn-filled"><i class="fa-solid fa-grid-2"></i> All Products</a>
       <a href="recently-visited.php" class="btn btn-green"><i class="fa-solid fa-clock-rotate-left"></i> Recently Visited</a>
+      <?php if (!empty($visits)): ?>
+      <a href="most-visited.php?reset=1"
+         onclick="return confirm('Reset all visit counts?')"
+         class="btn btn-red" style="margin-left:auto;">
+        <i class="fa-solid fa-rotate-left"></i> Reset Counts
+      </a>
+      <?php endif; ?>
     </div>
+    <?php if (isset($_GET['cleared'])): ?>
+    <div style="margin-top:1rem;background:rgba(0,255,65,.05);border:1px solid rgba(0,255,65,.2);padding:.9rem 1rem;font-family:var(--font-mono);font-size:.78rem;color:var(--green);">
+      <i class="fa-solid fa-circle-check"></i> Visit counts reset. Cookie cleared.
+    </div>
+    <?php endif; ?>
 
   </div>
 </section>

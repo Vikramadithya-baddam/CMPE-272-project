@@ -2,20 +2,15 @@
 // ============================================================
 // PARADOX SYSTEMS — product_layout.php
 // Shared template for all product pages.
-// Each product page sets $p array then includes this file.
-//
-// Required $p keys:
-//   slug, name, category, cat_color, price, period,
-//   tagline, image, description, features[], specs[],
-//   who_for[], icon_fa
+// Includes: breadcrumbs, product number, you might also like
 // ============================================================
 
-// Must be included AFTER cookie logic so cookies are already set
-// (cookie_handler.php is included by the product page first)
+$active_page  = 'products';
+$prod_num     = get_product_number($p['slug']);
+$prod_total   = get_product_count();
+$related      = get_related($p['slug'], 3);
 
-$active_page = 'products';
-
-// Color map for category badges
+// Color map
 $colors = [
     'green' => ['text' => 'var(--green)', 'border' => 'rgba(0,255,65,.3)',   'bg' => 'rgba(0,255,65,.05)'],
     'cyan'  => ['text' => 'var(--cyan)',  'border' => 'rgba(0,212,255,.3)',  'bg' => 'rgba(0,212,255,.05)'],
@@ -39,9 +34,18 @@ $c = $colors[$p['cat_color']] ?? $colors['green'];
   <style>
     .product-hero-img {
       position: absolute; inset: 0;
-      background: linear-gradient(to right, var(--bg) 40%, rgba(6,6,17,.7) 100%),
-                  url('<?php echo $p['image']; ?>') center/cover no-repeat;
+      background:
+        linear-gradient(to right, var(--bg) 35%, rgba(5,5,15,0.5) 100%),
+        linear-gradient(to top, rgba(5,5,15,0.8) 0%, transparent 40%),
+        url('<?php echo $p['image']; ?>') center/cover no-repeat;
       z-index: 0;
+    }
+    /* Category-specific tint overlay */
+    .product-hero-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, <?php echo $c['bg']; ?> 0%, transparent 60%);
+      pointer-events: none;
     }
     .product-detail { display:grid; grid-template-columns:1.1fr 1fr; gap:3rem; align-items:start; }
     .product-desc p { color:var(--text); margin-bottom:1rem; font-size:1.05rem; }
@@ -74,16 +78,37 @@ $c = $colors[$p['cat_color']] ?? $colors['green'];
 <div class="page-hero" style="min-height:55vh;display:flex;align-items:flex-end;padding-bottom:3.5rem;">
   <div class="product-hero-img"></div>
   <div class="container" style="position:relative;z-index:1;">
-    <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap;">
-      <a href="products.php" style="font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim);letter-spacing:.12em;display:flex;align-items:center;gap:.3rem;">
-        <i class="fa-solid fa-arrow-left" style="font-size:.6rem;"></i> ALL PRODUCTS
+    <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1.2rem;flex-wrap:wrap;font-family:var(--font-mono);font-size:.68rem;">
+      <!-- Breadcrumbs -->
+      <a href="index.html" style="color:var(--text-dim);display:flex;align-items:center;gap:.3rem;">
+        <i class="fa-solid fa-house" style="font-size:.55rem;"></i> Home
       </a>
       <span style="color:var(--text-dim);opacity:.3;">/</span>
-      <span style="font-family:var(--font-mono);font-size:.7rem;
+      <a href="products.php" style="color:var(--text-dim);">Products</a>
+      <span style="color:var(--text-dim);opacity:.3;">/</span>
+      <span style="color:<?php echo $c['text']; ?>;"><?php echo htmlspecialchars($p['name']); ?></span>
+
+      <!-- Separator -->
+      <span style="margin-left:auto;display:flex;align-items:center;gap:.8rem;">
+        <!-- Product number badge -->
+        <span style="color:var(--text-dim);border:1px solid var(--border);padding:.15rem .6rem;letter-spacing:.1em;">
+          PRODUCT <?php echo str_pad($prod_num, 2, '0', STR_PAD_LEFT); ?> / <?php echo str_pad($prod_total, 2, '0', STR_PAD_LEFT); ?>
+        </span>
+        <!-- Compare link -->
+        <a href="compare.php?a=<?php echo urlencode($p['slug']); ?>"
+           style="color:var(--gold);border:1px solid rgba(255,215,0,.25);background:rgba(255,215,0,.04);padding:.15rem .7rem;display:flex;align-items:center;gap:.3rem;">
+          <i class="fa-solid fa-code-compare" style="font-size:.55rem;"></i> Compare
+        </a>
+      </span>
+    </div>
+
+    <!-- Category badge -->
+    <div style="margin-bottom:.8rem;">
+      <span style="font-family:var(--font-mono);font-size:.65rem;
                    color:<?php echo $c['text']; ?>;letter-spacing:.12em;
                    border:1px solid <?php echo $c['border']; ?>;
                    background:<?php echo $c['bg']; ?>;
-                   padding:.15rem .55rem;">
+                   padding:.2rem .65rem;">
         <?php echo htmlspecialchars($p['category']); ?>
       </span>
     </div>
@@ -181,6 +206,52 @@ $c = $colors[$p['cat_color']] ?? $colors['green'];
     </div>
   </div>
 </section>
+
+<!-- YOU MIGHT ALSO LIKE -->
+<?php if (!empty($related)): ?>
+<section style="background:var(--bg2);padding:4rem 0;border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-tag reveal">YOU_MIGHT_ALSO_LIKE</div>
+    <h2 class="reveal d1" style="color:var(--white);margin-bottom:2.5rem;">
+      Related <span style="color:<?php echo $c['text']; ?>;">Products</span>
+    </h2>
+    <div style="display:grid;grid-template-columns:repeat(<?php echo count($related); ?>,1fr);gap:1px;background:var(--border);border:1px solid var(--border);" class="reveal d2">
+      <?php foreach ($related as $rslug => $rprod):
+        $rc = $colors[$rprod['color']] ?? $colors['green'];
+        $rnum = get_product_number($rslug);
+      ?>
+      <div style="background:var(--bg2);padding:2rem;transition:background .3s,transform .3s;position:relative;overflow:hidden;"
+           onmouseover="this.style.background='var(--surface)';this.style.transform='translateY(-3px)'"
+           onmouseout="this.style.background='var(--bg2)';this.style.transform='translateY(0)'">
+        <!-- Top glow on hover via inline doesn't work well, using a pseudo instead with a border -->
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
+          <span style="font-size:1.8rem;color:<?php echo $rc['text']; ?>;text-shadow:0 0 16px <?php echo $rc['text']; ?>;">
+            <i class="fa-solid <?php echo $rprod['icon']; ?>"></i>
+          </span>
+          <span style="font-family:var(--font-mono);font-size:.62rem;color:<?php echo $rc['text']; ?>;border:1px solid <?php echo $rc['border']; ?>;background:<?php echo $rc['bg']; ?>;padding:.15rem .5rem;">
+            <?php echo htmlspecialchars($rprod['cat']); ?>
+          </span>
+        </div>
+        <div style="font-family:var(--font-head);font-size:.9rem;color:var(--white);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem;">
+          <?php echo htmlspecialchars($rprod['name']); ?>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:.72rem;color:<?php echo $rc['text']; ?>;margin-bottom:1.2rem;">
+          <?php echo htmlspecialchars($rprod['price']); ?>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);">
+          <span style="font-family:var(--font-mono);font-size:.62rem;color:var(--text-dim);">
+            PRODUCT <?php echo str_pad($rnum,2,'0',STR_PAD_LEFT); ?>
+          </span>
+          <a href="<?php echo $rprod['url']; ?>" style="font-family:var(--font-mono);font-size:.7rem;color:<?php echo $rc['text']; ?>;letter-spacing:.1em;display:flex;align-items:center;gap:.3rem;text-transform:uppercase;">
+            VIEW <i class="fa-solid fa-arrow-right" style="font-size:.6rem;"></i>
+          </a>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
 
 <!-- CTA -->
 <section style="padding-bottom:6rem;">

@@ -11,7 +11,7 @@ $p = [
   'price'    => '$900',
   'period'   => 'month',
   'tagline'  => 'Real phishing simulations against your own people. Turn your weakest link into your strongest defense.',
-  'image'    => 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1400&q=80',
+  'image'    => 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1400&q=80',
   'description' => [
     'PhishGuard runs continuous, realistic phishing simulations against your employees — using the same techniques, pretexts, and lures that actual threat actors deploy. We craft campaigns that impersonate your CEO, your IT helpdesk, your payroll provider, and your bank. Because that is what real attackers do.',
     'Every employee who clicks gets immediate in-the-moment training — not a scolding email three days later. Every employee gets a personal risk score. High-risk users get targeted micro-training modules. Over 90 days, click rates drop by an average of 78% across our client base.',

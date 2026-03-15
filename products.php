@@ -119,12 +119,53 @@ $active_page = 'products';
 <section>
   <div class="container">
     <div class="section-tag reveal">ALL_PRODUCTS.DB — 10 SERVICES</div>
-    <h2 class="reveal d1" style="color:var(--white);margin-bottom:2.5rem;">Our Full <span style="color:var(--green);">Product Suite</span></h2>
+    <h2 class="reveal d1" style="color:var(--white);margin-bottom:1.5rem;">Our Full <span style="color:var(--green);">Product Suite</span></h2>
+
+    <!-- Search + Filter + Compare bar -->
+    <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-bottom:2rem;" class="reveal d2">
+      <!-- Search -->
+      <div style="display:flex;align-items:center;gap:.5rem;background:var(--bg2);border:1px solid var(--border);padding:.55rem 1rem;flex:1;min-width:220px;transition:border-color .3s;" id="searchWrap">
+        <i class="fa-solid fa-magnifying-glass" style="color:var(--text-dim);font-size:.75rem;"></i>
+        <input type="text" id="prodSearch" placeholder="Search products..."
+               style="background:transparent;border:none;outline:none;font-family:var(--font-mono);font-size:.8rem;color:var(--text);width:100%;"
+               oninput="filterProducts()" />
+      </div>
+      <!-- Category filter -->
+      <select id="catFilter" onchange="filterProducts()"
+              style="background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:var(--font-mono);font-size:.75rem;padding:.55rem 1rem;outline:none;cursor:pointer;">
+        <option value="">All Categories</option>
+        <option value="OFFENSIVE_SEC">Offensive Sec</option>
+        <option value="AI_DEFENSE">AI Defense</option>
+        <option value="ENCRYPTION">Encryption</option>
+        <option value="INTELLIGENCE">Intelligence</option>
+        <option value="INCIDENT_RESP">Incident Response</option>
+        <option value="FORENSICS">Forensics</option>
+        <option value="TRAINING">Training</option>
+        <option value="CLOUD_SEC">Cloud Security</option>
+        <option value="RED_TEAM">Red Team</option>
+        <option value="COMPLIANCE">Compliance</option>
+      </select>
+      <!-- Compare link -->
+      <a href="compare.php" class="btn btn-green" style="padding:.55rem 1.2rem;font-size:.72rem;white-space:nowrap;">
+        <i class="fa-solid fa-code-compare"></i> Compare Products
+      </a>
+      <!-- Result count -->
+      <span id="filterCount" style="font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim);white-space:nowrap;">
+        Showing <span id="countNum" style="color:var(--green);">10</span> of 10
+      </span>
+    </div>
+
+    <!-- No results message -->
+    <div id="noResults" style="display:none;text-align:center;padding:3rem;border:1px solid var(--border);background:var(--surface);margin-bottom:1px;">
+      <i class="fa-solid fa-magnifying-glass" style="font-size:2rem;color:var(--text-dim);opacity:.4;margin-bottom:1rem;display:block;"></i>
+      <div style="font-family:var(--font-head);font-size:.9rem;color:var(--white);margin-bottom:.5rem;">NO PRODUCTS FOUND</div>
+      <p style="font-family:var(--font-mono);font-size:.75rem;color:var(--text-dim);">Try a different search term or category.</p>
+    </div>
 
     <div class="prod-grid reveal d2">
 
       <!-- 01 PenTest Pro -->
-      <div class="prod-card">
+      <div class="prod-card" data-cat="OFFENSIVE_SEC">
         <div class="pc-top">
           <span class="pc-icon"><i class="fa-solid fa-bug"></i></span>
           <span class="pc-tag green">OFFENSIVE_SEC</span>
@@ -137,13 +178,13 @@ $active_page = 'products';
           <span class="pc-feat"><i class="fa-solid fa-circle-check"></i>Free re-test after remediation</span>
         </div>
         <div style="margin-top:1.2rem;display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);">
-          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--green);">$8,500/engagement</span>
+          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--green-lt);text-shadow:0 0 8px rgba(0,255,101,.3);">$8,500/engagement</span>
           <a href="product-pentestpro.php" class="btn btn-green" style="padding:.5rem 1rem;font-size:.7rem;">VIEW &rsaquo;</a>
         </div>
       </div>
 
       <!-- 02 ORACLE AI Shield -->
-      <div class="prod-card">
+      <div class="prod-card" data-cat="AI_DEFENSE">
         <div class="pc-top">
           <span class="pc-icon"><i class="fa-solid fa-brain"></i></span>
           <span class="pc-tag cyan">AI_DEFENSE</span>
@@ -156,13 +197,13 @@ $active_page = 'products';
           <span class="pc-feat"><i class="fa-solid fa-circle-check"></i>SIEM integration included</span>
         </div>
         <div style="margin-top:1.2rem;display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);">
-          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--cyan);">$2,800/mo</span>
+          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--cyan-lt);text-shadow:0 0 8px rgba(0,229,255,.3);">$2,800/mo</span>
           <a href="product-oracle-ai.php" class="btn btn-green" style="padding:.5rem 1rem;font-size:.7rem;">VIEW &rsaquo;</a>
         </div>
       </div>
 
       <!-- 03 QuantumVault -->
-      <div class="prod-card">
+      <div class="prod-card" data-cat="ENCRYPTION">
         <div class="pc-top">
           <span class="pc-icon"><i class="fa-solid fa-lock"></i></span>
           <span class="pc-tag gold">ENCRYPTION</span>
@@ -175,13 +216,13 @@ $active_page = 'products';
           <span class="pc-feat"><i class="fa-solid fa-circle-check"></i>FIPS 140-3 compliant</span>
         </div>
         <div style="margin-top:1.2rem;display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);">
-          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--gold);">$4,200/mo</span>
+          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--gold-lt);text-shadow:0 0 8px rgba(255,204,0,.3);">$4,200/mo</span>
           <a href="product-quantumvault.php" class="btn btn-green" style="padding:.5rem 1rem;font-size:.7rem;">VIEW &rsaquo;</a>
         </div>
       </div>
 
       <!-- 04 DarkScan -->
-      <div class="prod-card">
+      <div class="prod-card" data-cat="INTELLIGENCE">
         <div class="pc-top">
           <span class="pc-icon"><i class="fa-solid fa-eye"></i></span>
           <span class="pc-tag red">INTELLIGENCE</span>
@@ -194,13 +235,13 @@ $active_page = 'products';
           <span class="pc-feat"><i class="fa-solid fa-circle-check"></i>Takedown service included</span>
         </div>
         <div style="margin-top:1.2rem;display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);">
-          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--red);">$1,500/mo</span>
+          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--red-lt);text-shadow:0 0 8px rgba(255,26,78,.3);">$1,500/mo</span>
           <a href="product-darkscan.php" class="btn btn-green" style="padding:.5rem 1rem;font-size:.7rem;">VIEW &rsaquo;</a>
         </div>
       </div>
 
       <!-- 05 ZeroDay Response -->
-      <div class="prod-card">
+      <div class="prod-card" data-cat="INCIDENT_RESP">
         <div class="pc-top">
           <span class="pc-icon"><i class="fa-solid fa-bolt"></i></span>
           <span class="pc-tag red">INCIDENT_RESP</span>
@@ -213,13 +254,13 @@ $active_page = 'products';
           <span class="pc-feat"><i class="fa-solid fa-circle-check"></i>Regulatory notification help</span>
         </div>
         <div style="margin-top:1.2rem;display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);">
-          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--red);">$15,000/yr</span>
+          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--orange-lt, #ff8c5a);text-shadow:0 0 8px rgba(255,107,53,.3);">$15,000/yr</span>
           <a href="product-zerodayresponse.php" class="btn btn-green" style="padding:.5rem 1rem;font-size:.7rem;">VIEW &rsaquo;</a>
         </div>
       </div>
 
       <!-- 06 ForensicsLab -->
-      <div class="prod-card">
+      <div class="prod-card" data-cat="FORENSICS">
         <div class="pc-top">
           <span class="pc-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
           <span class="pc-tag cyan">FORENSICS</span>
@@ -232,13 +273,13 @@ $active_page = 'products';
           <span class="pc-feat"><i class="fa-solid fa-circle-check"></i>Court-ready evidence reports</span>
         </div>
         <div style="margin-top:1.2rem;display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);">
-          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--cyan);">$6,000/engagement</span>
+          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--teal-lt, #00d4be);text-shadow:0 0 8px rgba(0,180,160,.3);">$6,000/engagement</span>
           <a href="product-forensicslab.php" class="btn btn-green" style="padding:.5rem 1rem;font-size:.7rem;">VIEW &rsaquo;</a>
         </div>
       </div>
 
       <!-- 07 PhishGuard -->
-      <div class="prod-card">
+      <div class="prod-card" data-cat="TRAINING">
         <div class="pc-top">
           <span class="pc-icon"><i class="fa-solid fa-fish"></i></span>
           <span class="pc-tag gold">TRAINING</span>
@@ -251,13 +292,13 @@ $active_page = 'products';
           <span class="pc-feat"><i class="fa-solid fa-circle-check"></i>Automated training modules</span>
         </div>
         <div style="margin-top:1.2rem;display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);">
-          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--gold);">$900/mo</span>
+          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--gold-lt);text-shadow:0 0 8px rgba(255,224,64,.3);">$900/mo</span>
           <a href="product-phishguard.php" class="btn btn-green" style="padding:.5rem 1rem;font-size:.7rem;">VIEW &rsaquo;</a>
         </div>
       </div>
 
       <!-- 08 CloudFortress -->
-      <div class="prod-card">
+      <div class="prod-card" data-cat="CLOUD_SEC">
         <div class="pc-top">
           <span class="pc-icon"><i class="fa-solid fa-cloud"></i></span>
           <span class="pc-tag cyan">CLOUD_SEC</span>
@@ -270,13 +311,13 @@ $active_page = 'products';
           <span class="pc-feat"><i class="fa-solid fa-circle-check"></i>One-click remediation guides</span>
         </div>
         <div style="margin-top:1.2rem;display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);">
-          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--cyan);">$3,400/mo</span>
+          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--purple-lt);text-shadow:0 0 8px rgba(192,132,252,.3);">$3,400/mo</span>
           <a href="product-cloudfortress.php" class="btn btn-green" style="padding:.5rem 1rem;font-size:.7rem;">VIEW &rsaquo;</a>
         </div>
       </div>
 
       <!-- 09 RedOps Suite -->
-      <div class="prod-card">
+      <div class="prod-card" data-cat="RED_TEAM">
         <div class="pc-top">
           <span class="pc-icon"><i class="fa-solid fa-chess-knight"></i></span>
           <span class="pc-tag red">RED_TEAM</span>
@@ -289,13 +330,13 @@ $active_page = 'products';
           <span class="pc-feat"><i class="fa-solid fa-circle-check"></i>Purple team debrief included</span>
         </div>
         <div style="margin-top:1.2rem;display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);">
-          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--red);">$12,000/quarter</span>
+          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--pink-lt, #ff5caa);text-shadow:0 0 8px rgba(255,92,170,.3);">$12,000/quarter</span>
           <a href="product-redops.php" class="btn btn-green" style="padding:.5rem 1rem;font-size:.7rem;">VIEW &rsaquo;</a>
         </div>
       </div>
 
       <!-- 10 ComplianceShield -->
-      <div class="prod-card">
+      <div class="prod-card" data-cat="COMPLIANCE">
         <div class="pc-top">
           <span class="pc-icon"><i class="fa-solid fa-shield-halved"></i></span>
           <span class="pc-tag green">COMPLIANCE</span>
@@ -308,7 +349,7 @@ $active_page = 'products';
           <span class="pc-feat"><i class="fa-solid fa-circle-check"></i>Auditor-ready dashboards</span>
         </div>
         <div style="margin-top:1.2rem;display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);">
-          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--green);">$2,100/mo</span>
+          <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--teal-lt, #00d4be);text-shadow:0 0 8px rgba(0,212,190,.3);">$2,100/mo</span>
           <a href="product-complianceshield.php" class="btn btn-green" style="padding:.5rem 1rem;font-size:.7rem;">VIEW &rsaquo;</a>
         </div>
       </div>
@@ -335,3 +376,54 @@ $active_page = 'products';
 </section>
 
 <?php include '_footer.php'; ?>
+<script>
+// Search + category filter for product grid
+function filterProducts() {
+  const q   = document.getElementById('prodSearch').value.toLowerCase().trim();
+  const cat = document.getElementById('catFilter').value;
+  const cards = document.querySelectorAll('.prod-card[data-cat]');
+  let visible = 0;
+
+  cards.forEach(card => {
+    const title = (card.querySelector('.pc-title')?.textContent || '').toLowerCase();
+    const desc  = (card.querySelector('.pc-desc')?.textContent  || '').toLowerCase();
+    const cardCat = card.dataset.cat || '';
+
+    const matchQ   = !q   || title.includes(q) || desc.includes(q);
+    const matchCat = !cat || cardCat === cat;
+
+    if (matchQ && matchCat) {
+      card.style.display = '';
+      card.style.animation = 'none';
+      card.offsetHeight; // reflow
+      card.style.animation = '';
+      visible++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // Update count
+  const num = document.getElementById('countNum');
+  if (num) num.textContent = visible;
+
+  // Show/hide no results
+  const noRes = document.getElementById('noResults');
+  if (noRes) noRes.style.display = visible === 0 ? 'block' : 'none';
+
+  // Rebuild grid border (gap elements hidden means bg shows through)
+  const grid = document.querySelector('.prod-grid');
+  if (grid) {
+    const shown = grid.querySelectorAll('.prod-card[data-cat]:not([style*="display: none"])');
+    grid.style.background = shown.length > 0 ? 'var(--border)' : 'transparent';
+  }
+}
+
+// Focus search wrap styling
+const sw = document.getElementById('searchWrap');
+const si = document.getElementById('prodSearch');
+if (sw && si) {
+  si.addEventListener('focus', () => sw.style.borderColor = 'var(--green)');
+  si.addEventListener('blur',  () => sw.style.borderColor = 'var(--border)');
+}
+</script>

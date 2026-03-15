@@ -1,4 +1,3 @@
-
 </main>
 
 <footer>
@@ -26,7 +25,9 @@
           <li><a href="product-oracle-ai.php"><i class="fa-solid fa-chevron-right"></i>ORACLE AI Shield</a></li>
           <li><a href="product-quantumvault.php"><i class="fa-solid fa-chevron-right"></i>QuantumVault</a></li>
           <li><a href="product-darkscan.php"><i class="fa-solid fa-chevron-right"></i>DarkScan</a></li>
-          <li><a href="recently-visited.php"><i class="fa-solid fa-chevron-right"></i>Recently Visited</a></li>
+          <li><a href="recently-visited.php"><i class="fa-solid fa-clock-rotate-left"></i>Recently Visited</a></li>
+          <li><a href="most-visited.php"><i class="fa-solid fa-fire"></i>Most Visited</a></li>
+          <li><a href="compare.php"><i class="fa-solid fa-code-compare"></i>Compare</a></li>
         </ul>
       </div>
       <div class="f-col">

@@ -29,7 +29,7 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html"    class="nav-link">Home</a></li>
       <li><a href="about.html"    class="nav-link">About</a></li>
-      <li><a href="products.php" class="nav-link">Services</a></li>
+      <li><a href="products.php" class="nav-link">Products</a></li>
       <li><a href="news.html"     class="nav-link">News</a></li>
       <li><a href="contact.php"   class="nav-link active">Contact</a></li>
       <li><a href="login.php" class="nav-link" style="color:var(--gold);border:1px solid rgba(255,215,0,.25);padding:.4rem .8rem;font-size:.64rem;"><i class="fa-solid fa-lock" style="margin-right:.3rem;font-size:.55rem;"></i>Admin</a></li>
@@ -257,8 +257,8 @@
         <p class="footer-tagline">We existed before you knew you needed us.</p>
         <p class="footer-quote">"Hello, friend." <em>— Mr. Robot S01E01</em></p>
       </div>
-      <div class="f-col"><h5>// Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="products.php">Services</a></li><li><a href="news.html">News</a></li><li><a href="contact.php">Contact</a></li></ul></div>
-      <div class="f-col"><h5>// Services</h5><ul><li><a href="products.php">Penetration Testing</a></li><li><a href="products.php">AI Defense</a></li><li><a href="products.php">Quantum Encryption</a></li><li><a href="products.php">Dark Web Monitor</a></li></ul></div>
+      <div class="f-col"><h5>// Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="products.php">Products</a></li><li><a href="news.html">News</a></li><li><a href="contact.php">Contact</a></li></ul></div>
+      <div class="f-col"><h5>// Products</h5><ul><li><a href="product-pentestpro.php">PenTest Pro</a></li><li><a href="product-oracle-ai.php">ORACLE AI Shield</a></li><li><a href="product-quantumvault.php">QuantumVault</a></li><li><a href="product-darkscan.php">DarkScan</a></li></ul></div>
       <div class="f-col"><h5>// Transmission</h5><p class="f-sub">Encrypted channel. No tracking. No logging.</p><div class="f-email-row"><div class="f-input-wrap"><span class="f-prefix">root@paradox:~$</span><input type="email" placeholder="enter_email" aria-label="Newsletter" /></div><button class="f-btn" type="button">TRANSMIT</button></div></div>
     </div>
     <div class="footer-bottom">

@@ -11,7 +11,7 @@ $p = [
   'price'    => '$2,800',
   'period'   => 'month',
   'tagline'  => 'AI-powered threat detection trained on 15 years of breach data. Sub-100ms response.',
-  'image'    => 'https://images.unsplash.com/photo-1555255707-c07966088b7b?w=1400&q=80',
+  'image'    => 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1400&q=80',
   'description' => [
     'ORACLE is our proprietary AI threat-detection engine — built from scratch by our own engineers on 15 years of real-world breach data, 400 million threat patterns, and continuous red-team adversarial training. It does not look for known signatures. It understands behavior.',
     'The model baselines every user, device, and service in your environment. When something deviates — even slightly — ORACLE detects it, classifies it, and triggers an automated response in under 100 milliseconds. Most security teams open their first alert email around minute 45. ORACLE is already done.',

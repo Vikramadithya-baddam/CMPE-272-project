@@ -66,3 +66,47 @@ function get_most_visited($limit = 5) {
     arsort($visits); // sort descending by count
     return array_slice($visits, 0, $limit, true);
 }
+
+// ── Clear all tracking cookies ────────────────────────────────
+function reset_cookies() {
+    setcookie('paradox_recent', '', time() - 3600, COOKIE_PATH);
+    setcookie('paradox_visits', '', time() - 3600, COOKIE_PATH);
+    // Clear from current request too
+    unset($_COOKIE['paradox_recent']);
+    unset($_COOKIE['paradox_visits']);
+}
+
+// ── Get related products (same category or complementary) ─────
+function get_related($current_slug, $limit = 3) {
+    $catalog = get_catalog();
+    if (!isset($catalog[$current_slug])) return [];
+
+    $current_cat = $catalog[$current_slug]['color']; // use color as proxy for category tier
+
+    // Priority 1: same color/tier, Priority 2: everything else
+    $same = []; $other = [];
+    foreach ($catalog as $slug => $prod) {
+        if ($slug === $current_slug) continue;
+        if ($prod['color'] === $current_cat) $same[$slug]  = $prod;
+        else                                 $other[$slug] = $prod;
+    }
+    // Shuffle for variety
+    $keys = array_merge(array_keys($same), array_keys($other));
+    $result = [];
+    foreach (array_slice($keys, 0, $limit) as $k) {
+        $result[$k] = $catalog[$k];
+    }
+    return $result;
+}
+
+// ── Get product number (1-10) by slug ─────────────────────────
+function get_product_number($slug) {
+    $keys = array_keys(get_catalog());
+    $pos  = array_search($slug, $keys);
+    return $pos !== false ? $pos + 1 : 0;
+}
+
+// ── Get total product count ───────────────────────────────────
+function get_product_count() {
+    return count(get_catalog());
+}

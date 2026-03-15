@@ -11,7 +11,7 @@ $p = [
   'price'    => '$4,200',
   'period'   => 'month',
   'tagline'  => 'Post-quantum cryptography suite. Protect your data against computers that do not exist yet — because they will.',
-  'image'    => 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1400&q=80',
+  'image'    => 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1400&q=80',
   'description' => [
     'QuantumVault implements NIST-approved post-quantum cryptographic algorithms across your entire data stack. The harvest-now-decrypt-later threat is not theoretical — adversaries are already collecting your encrypted traffic today with plans to decrypt it when quantum computers reach cryptographic scale in 4–6 years.',
     'By then, retroactive protection is impossible. QuantumVault migrates you to Kyber, Dilithium, and SPHINCS+ today so that when that day comes, your data is still unreadable to anyone who collected it.',

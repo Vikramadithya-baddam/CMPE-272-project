@@ -11,7 +11,7 @@ $p = [
   'price'    => '$2,100',
   'period'   => 'month',
   'tagline'  => 'Turn 6-month audit prep into a continuous background process. SOC 2, ISO 27001, HIPAA, GDPR, PCI-DSS.',
-  'image'    => 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1400&q=80',
+  'image'    => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1400&q=80',
   'description' => [
     'ComplianceShield automates the most painful parts of security compliance: evidence collection, control mapping, policy management, vendor risk assessment, and audit preparation. What most companies spend 3 to 6 months preparing for, ComplianceShield keeps ready 365 days a year.',
     'The platform maps your controls across SOC 2 Type II, ISO 27001, HIPAA, GDPR, and PCI-DSS simultaneously. Fix a control once and it satisfies requirements across every framework. Your compliance posture is always audit-ready — not just in the sprint before the auditor shows up.',

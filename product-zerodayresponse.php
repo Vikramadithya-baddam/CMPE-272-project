@@ -11,7 +11,7 @@ $p = [
   'price'    => '$15,000',
   'period'   => 'year',
   'tagline'  => '4-minute response SLA. Industry average is 72 hours. That gap is your entire attack surface.',
-  'image'    => 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=1400&q=80',
+  'image'    => 'https://images.unsplash.com/photo-1526374870839-e155464bb9b2?w=1400&q=80',
   'description' => [
     'A critical zero-day drops at 2:47AM on a Sunday. We are paged within 60 seconds. An engineer is accessing your system within 4 minutes. A patched mitigation strategy is in your hands within the hour. This is not a brochure claim. This is our contractual SLA — backed by financial penalties if we miss it.',
     'ZeroDay Response is a retainer-based annual program. When you sign, you get a dedicated incident response team that knows your environment before the crisis happens. We onboard your systems, document your architecture, and run quarterly tabletop exercises so that when a zero-day drops, there is no ramp-up time.',

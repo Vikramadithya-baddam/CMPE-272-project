@@ -11,7 +11,7 @@ $p = [
   'price'    => '$3,400',
   'period'   => 'month',
   'tagline'  => 'Complete cloud security posture management for AWS, Azure, and GCP. Find misconfigs before attackers do.',
-  'image'    => 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1400&q=80',
+  'image'    => 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1400&q=80',
   'description' => [
     'CloudFortress is continuous cloud security posture management across AWS, Azure, and GCP simultaneously. It scans your entire cloud environment — every S3 bucket, every IAM policy, every security group, every Lambda function, every Kubernetes cluster — and identifies every misconfiguration, overpermission, and exposed resource in real time.',
     'The average enterprise cloud environment has 34 critical misconfigurations at any given time. Most are not the result of negligence — they are the result of speed. CloudFortress finds them continuously so you can fix them continuously.',

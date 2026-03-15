@@ -11,7 +11,7 @@ $p = [
   'price'    => '$1,500',
   'period'   => 'month',
   'tagline'  => 'We send agents where most companies will not look. 40,000+ dark web sources monitored 24/7.',
-  'image'    => 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&q=80',
+  'image'    => 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1400&q=80',
   'description' => [
     'DarkScan monitors over 40,000 dark web forums, paste sites, criminal marketplaces, Telegram groups, and private IRC channels in real time. Your credentials, source code, customer PII, proprietary documents, and internal communications could be for sale right now — and you would not know.',
     'We find it before the buyer does. When a match is detected, you receive an immediate alert with the source, the data exposed, and a recommended containment action. For leaked credentials, we offer an automated forced-reset integration with your identity provider.',

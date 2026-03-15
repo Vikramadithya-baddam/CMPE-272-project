@@ -11,7 +11,7 @@ $p = [
   'price'    => '$6,000',
   'period'   => 'engagement',
   'tagline'  => 'Reconstruct the complete attack timeline. We tell you who, how, when — down to the millisecond.',
-  'image'    => 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1400&q=80',
+  'image'    => 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&q=80',
   'description' => [
     'ForensicsLab reconstructs the complete attack story from raw digital artifacts. Memory dumps, network flow records, Windows event logs, registry hives, browser artifacts, file system metadata — our forensics engineers read them all fluently and assemble the timeline of exactly what happened and who did it.',
     'We work two parallel tracks simultaneously: containment and investigation. We do not make you choose between stopping the bleeding and understanding the wound. Both happen at the same time by separate teams.',

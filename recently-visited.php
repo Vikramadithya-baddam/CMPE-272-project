@@ -1,6 +1,13 @@
 <?php
 require_once 'cookie_handler.php';
 
+// Handle reset
+if (isset($_GET['reset']) && $_GET['reset'] === '1') {
+    reset_cookies();
+    header('Location: recently-visited.php?cleared=1');
+    exit;
+}
+
 $recent  = read_recent();
 $catalog = get_catalog();
 $active_page = 'products';
@@ -109,7 +116,20 @@ $active_page = 'products';
     <div style="display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;" class="reveal">
       <a href="products.php"     class="btn btn-filled"><i class="fa-solid fa-grid-2"></i> All Products</a>
       <a href="most-visited.php" class="btn btn-green"><i class="fa-solid fa-fire"></i> Most Visited</a>
+      <?php if (!empty($recent)): ?>
+      <a href="recently-visited.php?reset=1"
+         onclick="return confirm('Clear your recently visited history?')"
+         class="btn btn-red" style="margin-left:auto;">
+        <i class="fa-solid fa-trash"></i> Clear History
+      </a>
+      <?php endif; ?>
     </div>
+
+    <?php if (isset($_GET['cleared'])): ?>
+    <div style="margin-top:1rem;background:rgba(0,255,65,.05);border:1px solid rgba(0,255,65,.2);padding:.9rem 1rem;font-family:var(--font-mono);font-size:.78rem;color:var(--green);">
+      <i class="fa-solid fa-circle-check"></i> Cookie cleared. Visit history has been reset.
+    </div>
+    <?php endif; ?>
 
   </div>
 </section>
