@@ -188,7 +188,22 @@ document.querySelectorAll('a[href]').forEach(link => {
     });
   }
 });
+
 window.addEventListener('load', () => {
   document.body.style.cssText = 'opacity:0;transition:none';
   requestAnimationFrame(() => { document.body.style.cssText = 'opacity:1;transition:opacity 0.45s ease'; });
+});
+
+/* ── Fix back/forward button black page ──────────────────────
+   When the browser restores a page from its back-forward cache
+   (bfcache), it snapshots the DOM exactly as it was — including
+   opacity:0 from the fade-out. The 'pageshow' event fires on
+   every bfcache restore (persisted === true), so we reset
+   opacity back to 1 immediately.
+   ─────────────────────────────────────────────────────────── */
+window.addEventListener('pageshow', (e) => {
+  if (e.persisted) {
+    // Page was restored from bfcache — reset opacity immediately
+    document.body.style.cssText = 'opacity:1;transition:none';
+  }
 });
