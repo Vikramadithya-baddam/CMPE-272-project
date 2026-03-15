@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Paradox Systems</title>
+  <meta name="description" content="Penetration testing, AI threat defense, quantum encryption, dark web monitoring, zero-day response, and incident forensics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23080810'/><text y='72' x='10' font-size='68' fill='%2300ff41' font-family='monospace'>_</text></svg>" />
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+<canvas id="matrix-canvas" aria-hidden="true"></canvas>
+<div class="cursor-dot" id="cDot"></div>
+<div class="cursor-ring" id="cRing"></div>
+
+<nav id="navbar">
+  <div class="container nav-wrap">
+    <a href="index.html" class="nav-logo"><span class="br">[</span>PARADOX<span class="cur">_</span><span class="br">]</span></a>
+    <button class="hamburger" id="ham" aria-label="Toggle nav" aria-expanded="false">
+      <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html"    class="nav-link">Home</a></li>
+      <li><a href="about.html"    class="nav-link">About</a></li>
+      <li><a href="products.html" class="nav-link active">Services</a></li>
+      <li><a href="news.html"     class="nav-link">News</a></li>
+      <li><a href="contact.php"   class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-status"><span class="status-dot"></span><span id="navStatus">SECURE_CONN</span></div>
+  </div>
+</nav>
+
+<main>
+
+<div class="page-hero" data-bg-text="ARSENAL">
+  <div class="grid-bg"></div>
+  <div class="container">
+    <p class="eyebrow">// SERVICES_CATALOG &mdash; HANDLE WITH CARE</p>
+    <h1 style="color:var(--white);">THE <span style="color:var(--red);">ARSENAL</span></h1>
+    <p class="sub">"Knowing how to break something is the only way to understand what it takes to protect it." &mdash; Maya Okonkwo</p>
+  </div>
+</div>
+
+<!-- STATS -->
+<section style="padding:2.5rem 0 0;">
+  <div class="container">
+    <div class="nums-strip reveal">
+      <div class="num-item"><span class="big" style="color:var(--green);" data-n="6">0</span><div class="lbl">Core Services</div></div>
+      <div class="num-item"><span class="big" style="color:var(--green);" data-n="340" data-s="+">0+</span><div class="lbl">Enterprise Clients</div></div>
+      <div class="num-item"><span class="big" style="color:var(--gold);"  data-n="4" data-s="min">0</span><div class="lbl">Zero-Day Response</div></div>
+      <div class="num-item"><span class="big" style="color:var(--red);"   data-n="0">0</span><div class="lbl">Breaches on Our Watch</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES GRID -->
+<section>
+  <div class="container">
+    <div class="section-tag reveal">PRIMARY_SERVICES</div>
+    <h2 class="reveal d1" style="color:var(--white);margin-bottom:2.5rem;">Core <span style="color:var(--green);">Service Lines</span></h2>
+
+    <div class="prod-grid reveal d2">
+
+      <div class="prod-card">
+        <div class="pc-top"><span class="pc-icon">[!]</span><span class="pc-tag green">OFFENSIVE</span></div>
+        <div class="pc-title">Penetration Testing</div>
+        <p class="pc-desc">We attack your systems with full nation-state actor sophistication. Every engagement covers external, internal, wireless, social engineering, and physical vectors.<br><br><em style="color:var(--text-dim);font-size:.82rem;">// "I am the one who knocks." We quote this in every pen test kickoff. Compliance hates it.</em></p>
+        <div class="pc-feats">
+          <span class="pc-feat">Full-scope external + internal attack simulation</span>
+          <span class="pc-feat">Social engineering and phishing campaigns</span>
+          <span class="pc-feat">Physical security assessment (yes, we try to walk in)</span>
+          <span class="pc-feat">Executive-readable + technical findings report</span>
+          <span class="pc-feat">Remediation support + free re-test after fixes</span>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="pc-top"><span class="pc-icon">[~]</span><span class="pc-tag cyan">AI_POWERED</span></div>
+        <div class="pc-title">AI Threat Defense (ORACLE)</div>
+        <p class="pc-desc">Trained on 15 years of breach data and 400 million threat patterns. Monitors 24/7/365, detects anomalies in milliseconds, and notifies humans before most tools even finish loading.<br><br><em style="color:var(--text-dim);font-size:.82rem;">// "The universe is not obligated to make sense." ORACLE, however, will explain it in plain English.</em></p>
+        <div class="pc-feats">
+          <span class="pc-feat">Real-time anomaly detection (sub-100ms alert)</span>
+          <span class="pc-feat">Behavioral baselining for every user and device</span>
+          <span class="pc-feat">Automated containment on confirmed threats</span>
+          <span class="pc-feat">SIEM integration (Splunk, QRadar, Sentinel)</span>
+          <span class="pc-feat">Monthly intelligence reports</span>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="pc-top"><span class="pc-icon">[O]</span><span class="pc-tag gold">QUANTUM</span></div>
+        <div class="pc-title">Quantum Encryption Suite</div>
+        <p class="pc-desc">Most encryption today will be breakable in 5-10 years when quantum computers mature. We implement NIST-approved post-quantum algorithms today so your data is safe against adversaries collecting it now to decrypt later.<br><br><em style="color:var(--text-dim);font-size:.82rem;">// Dr. Kozlov describes this as "trivially straightforward." The rest of us have stopped trying to understand the math.</em></p>
+        <div class="pc-feats">
+          <span class="pc-feat">Post-quantum key exchange (Kyber-1024)</span>
+          <span class="pc-feat">Quantum-safe digital signatures (Dilithium)</span>
+          <span class="pc-feat">Data-at-rest and in-transit coverage</span>
+          <span class="pc-feat">HSM integration and key ceremony management</span>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="pc-top"><span class="pc-icon">[*]</span><span class="pc-tag red">DARK_WEB</span></div>
+        <div class="pc-title">Dark Web Monitoring</div>
+        <p class="pc-desc">40,000+ dark web forums, markets, and private channels monitored in real-time. Your credentials, source code, and customer PII could be on sale right now. We find it before the buyer does.<br><br><em style="color:var(--text-dim);font-size:.82rem;">// "You are only seeing what they want you to see." We see everything else.</em></p>
+        <div class="pc-feats">
+          <span class="pc-feat">40,000+ dark web sources monitored</span>
+          <span class="pc-feat">Credential leak detection and alerting</span>
+          <span class="pc-feat">Brand impersonation and fraud detection</span>
+          <span class="pc-feat">Takedown services for leaked content</span>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="pc-top"><span class="pc-icon">[/]</span><span class="pc-tag green">RESPONSE</span></div>
+        <div class="pc-title">Zero-Day Response</div>
+        <p class="pc-desc">A critical zero-day drops at 2:47AM. Our on-call team is paged within 60 seconds. An engineer is on your system within 4 minutes. A patched mitigation is in your hands within the hour.<br><br><em style="color:var(--text-dim);font-size:.82rem;">// Industry average zero-day response: 72 hours. We consider that a catastrophic failure scenario.</em></p>
+        <div class="pc-feats">
+          <span class="pc-feat">4-minute initial response SLA (guaranteed)</span>
+          <span class="pc-feat">24/7/365 on-call engineering team</span>
+          <span class="pc-feat">Parallel containment + root cause analysis</span>
+          <span class="pc-feat">Regulatory notification support (GDPR, HIPAA)</span>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <div class="pc-top"><span class="pc-icon">[?]</span><span class="pc-tag cyan">FORENSICS</span></div>
+        <div class="pc-title">Incident Forensics</div>
+        <p class="pc-desc">Someone got in. Who, how, when, and what did they take? We reconstruct the complete attack timeline from raw artifacts — memory dumps, network flows, registry hives. We build the narrative. We identify the actor.<br><br><em style="color:var(--text-dim);font-size:.82rem;">// "Elementary." We say this once per engagement. It is a rule.</em></p>
+        <div class="pc-feats">
+          <span class="pc-feat">Complete attack timeline reconstruction</span>
+          <span class="pc-feat">Threat actor attribution where possible</span>
+          <span class="pc-feat">Chain-of-custody evidence collection</span>
+          <span class="pc-feat">Litigation-ready expert witness reporting</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section style="background:var(--surface);">
+  <div class="container">
+    <div class="section-tag reveal">PRICING_MATRIX</div>
+    <h2 class="reveal d1" style="color:var(--white);margin-bottom:.6rem;">Choose Your <span style="color:var(--gold);">Level of Paranoia</span></h2>
+    <p class="reveal d2" style="color:var(--text-dim);max-width:540px;margin-bottom:2.5rem;">Three tiers. All serious. The only wrong choice is choosing nothing.</p>
+
+    <div class="pricing-grid reveal d2">
+
+      <div class="price-card">
+        <div class="price-tier">TIER 1 // STANDARD</div>
+        <h3>WATCHER</h3>
+        <div class="price-amt"><span class="cur">$</span>4,900<span class="mo">/mo</span></div>
+        <ul class="price-feats">
+          <li>ORACLE AI monitoring (basic)</li>
+          <li>Dark web credential monitoring</li>
+          <li>Monthly security health report</li>
+          <li>1 pen test per year (external)</li>
+          <li>Email support (24hr response)</li>
+          <li class="off">Zero-day response SLA</li>
+          <li class="off">Quantum encryption</li>
+        </ul>
+        <a href="contact.php" class="btn btn-ghost" style="justify-content:center;">REQUEST ACCESS</a>
+      </div>
+
+      <div class="price-card hot">
+        <div class="price-tier">TIER 2 // RECOMMENDED</div>
+        <h3>GUARDIAN</h3>
+        <div class="price-amt"><span class="cur">$</span>14,500<span class="mo">/mo</span></div>
+        <ul class="price-feats">
+          <li>ORACLE AI monitoring (full)</li>
+          <li>Dark web monitoring (all vectors)</li>
+          <li>Real-time alerts + weekly reports</li>
+          <li>2 full-scope pen tests per year</li>
+          <li>Zero-day response (4min SLA)</li>
+          <li>Incident response retainer (20hrs)</li>
+          <li class="off">Quantum encryption suite</li>
+        </ul>
+        <a href="contact.php" class="btn btn-filled" style="justify-content:center;">REQUEST ACCESS</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-tier">TIER 3 // PARANOID</div>
+        <h3>GHOST</h3>
+        <div class="price-amt" style="font-size:1.4rem;letter-spacing:.05em;align-items:center;">CLASSIFIED</div>
+        <ul class="price-feats">
+          <li>Everything in GUARDIAN</li>
+          <li>Quantum encryption suite</li>
+          <li>Full red team operations (ongoing)</li>
+          <li>24/7 dedicated SOC team</li>
+          <li>Nation-state threat intelligence</li>
+          <li>Physical security assessment</li>
+          <li>Board-level security briefings</li>
+        </ul>
+        <a href="contact.php" class="btn btn-red" style="justify-content:center;">ESTABLISH CONTACT</a>
+      </div>
+
+    </div>
+    <p style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-dim);margin-top:1.2rem;text-align:center;">// GHOST tier clients: you know what to do. If you don't, you are not ready for GHOST.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding-bottom:6rem;">
+  <div class="container">
+    <div class="cta-box reveal" data-code="SH">
+      <div>
+        <div class="section-tag">READY_TO_DEPLOY</div>
+        <h2 style="color:var(--white);">READY TO <span style="color:var(--green);">PROTECT</span> YOUR KINGDOM?</h2>
+        <p>"When you play the game of cyber, you win or your data bleeds." &mdash; Adapted from an all-hands meeting nobody will let us forget.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="contact.php"  class="btn btn-filled">BEGIN SCOPE CALL</a>
+        <a href="about.html"   class="btn btn-green">WHO WE ARE</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><span class="br">[</span>PARADOX<span class="cur">_</span><span class="br">]</span></div>
+        <p class="footer-tagline">We existed before you knew you needed us.</p>
+        <p class="footer-quote">"Hello, friend." <em>— Mr. Robot S01E01</em></p>
+      </div>
+      <div class="f-col"><h5>// Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="products.html">Services</a></li><li><a href="news.html">News</a></li><li><a href="contact.php">Contact</a></li></ul></div>
+      <div class="f-col"><h5>// Services</h5><ul><li><a href="products.html">Penetration Testing</a></li><li><a href="products.html">AI Defense</a></li><li><a href="products.html">Quantum Encryption</a></li><li><a href="products.html">Dark Web Monitor</a></li></ul></div>
+      <div class="f-col"><h5>// Transmission</h5><p class="f-sub">Encrypted channel. No tracking. No logging.</p><div class="f-email-row"><div class="f-input-wrap"><span class="f-prefix">root@paradox:~$</span><input type="email" placeholder="enter_email" aria-label="Newsletter" /></div><button class="f-btn" type="button">TRANSMIT</button></div></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="f-copy"><span>&copy; 2025 Paradox Systems Inc.</span><span class="f-sep">|</span><span id="uptime">UPTIME: CALCULATING...</span></div>
+      <div class="f-links"><a href="#">PRIVACY</a><a href="#">TERMS</a><a href="#">PGP</a></div>
+    </div>
+    <div class="f-easter" id="easter">// Hello, friend. Hello, friend? That's lame. Maybe I should give you a name.</div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

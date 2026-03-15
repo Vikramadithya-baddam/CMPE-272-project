@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News &amp; Intelligence — Paradox Systems</title>
+  <meta name="description" content="Threat intelligence, company dispatches, field reports and breach analysis from the Paradox Systems team." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23080810'/><text y='72' x='10' font-size='68' fill='%2300ff41' font-family='monospace'>_</text></svg>" />
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+<canvas id="matrix-canvas" aria-hidden="true"></canvas>
+<div class="cursor-dot" id="cDot"></div>
+<div class="cursor-ring" id="cRing"></div>
+
+<nav id="navbar">
+  <div class="container nav-wrap">
+    <a href="index.html" class="nav-logo"><span class="br">[</span>PARADOX<span class="cur">_</span><span class="br">]</span></a>
+    <button class="hamburger" id="ham" aria-label="Toggle nav" aria-expanded="false">
+      <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html"    class="nav-link">Home</a></li>
+      <li><a href="about.html"    class="nav-link">About</a></li>
+      <li><a href="products.html" class="nav-link">Services</a></li>
+      <li><a href="news.html"     class="nav-link active">News</a></li>
+      <li><a href="contact.php"   class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-status"><span class="status-dot"></span><span id="navStatus">SECURE_CONN</span></div>
+  </div>
+</nav>
+
+<main>
+
+<!-- BREAKING TICKER -->
+<div class="news-ticker" aria-live="polite">
+  <div class="ticker-track">
+    <span class="tick-item">BREAKING: AI-generated phishing surges 340% in Q3 2025</span><span class="tick-sep"> &diams; </span>
+    <span class="tick-item">ORACLE detects new zero-day variant &mdash; patch issued in 6 minutes</span><span class="tick-sep"> &diams; </span>
+    <span class="tick-item">Quantum computing threat horizon now 4-6 years</span><span class="tick-sep"> &diams; </span>
+    <span class="tick-item">Paradox Red Team wins DEFCON CTF for 3rd consecutive year</span><span class="tick-sep"> &diams; </span>
+    <!-- dup -->
+    <span class="tick-item">BREAKING: AI-generated phishing surges 340% in Q3 2025</span><span class="tick-sep"> &diams; </span>
+    <span class="tick-item">ORACLE detects new zero-day variant &mdash; patch issued in 6 minutes</span><span class="tick-sep"> &diams; </span>
+    <span class="tick-item">Quantum computing threat horizon now 4-6 years</span><span class="tick-sep"> &diams; </span>
+    <span class="tick-item">Paradox Red Team wins DEFCON CTF for 3rd consecutive year</span><span class="tick-sep"> &diams; </span>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero" data-bg-text="SIGNAL">
+  <div class="grid-bg"></div>
+  <div class="container">
+    <p class="eyebrow">// INTELLIGENCE_FEED &mdash; LIVE STREAM</p>
+    <h1 style="color:var(--white);">SIG<span style="color:var(--red);">NAL</span></h1>
+    <p class="sub">Threat intelligence. Company dispatches. Field reports. The news feed that treats you like you can handle the truth.</p>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+
+    <!-- Filter bar -->
+    <div class="news-filters">
+      <span style="font-family:var(--font-mono);font-size:0.68rem;color:var(--green);letter-spacing:.12em;">FILTER:</span>
+      <button class="nf-btn active">ALL</button>
+      <button class="nf-btn">THREAT_INTEL</button>
+      <button class="nf-btn">AI_DIVISION</button>
+      <button class="nf-btn">RED_TEAM</button>
+      <button class="nf-btn">COMPANY</button>
+      <button class="nf-btn">FIELD_REPORTS</button>
+    </div>
+
+    <!-- TOP: Featured + sidebar -->
+    <div class="news-top reveal">
+
+      <div class="news-feat">
+        <span class="n-cat breach" style="margin-bottom:.7rem;">THREAT_INTEL</span>
+        <div class="n-date">// 2025.11.20 &mdash; 03:47 UTC &mdash; SEVERITY: CRITICAL</div>
+        <div class="n-title lg" style="margin:.5rem 0 1rem;">NEW APT GROUP "IRON_THRONE" TARGETS ENERGY INFRASTRUCTURE WITH NEVER-BEFORE-SEEN LATERAL MOVEMENT TOOLKIT</div>
+        <p class="n-excerpt">
+          Paradox Threat Research has identified a previously undocumented advanced persistent threat group designated IRON_THRONE &mdash; named for their obsession with energy grid control and their MO of establishing patient, long-dwell-time persistence (confirmed cases: 14+ months undetected).<br><br>
+          Unlike most APT groups, IRON_THRONE does not exfiltrate immediately. They move like winter &mdash; slowly, quietly, until they have established enough positions that removing them becomes a strategic problem rather than a technical one.<br><br>
+          The toolkit includes a custom rootkit (DARKFORGE), a novel C2 protocol that disguises traffic as legitimate NTP queries, and an AI-assisted lateral movement engine that adapts its behavior based on detected EDR signatures in real time.
+        </p>
+        <a href="#" class="n-read">READ FULL BRIEF</a>
+      </div>
+
+      <div class="news-side">
+        <div class="news-mini">
+          <span class="n-cat corp" style="margin-bottom:.4rem;">COMPANY</span>
+          <div class="n-date">// 2025.11.18</div>
+          <div class="n-title">ORACLE AI MARKS 500 MILLION THREAT EVENTS ANALYZED. CELEBRATED WITH CAKE.</div>
+          <p style="font-size:.82rem;color:var(--text-dim);margin:.4rem 0;">Maya made a cake. Dr. Kozlov reviewed the milestone and said "adequate." Jessica Park has not forgiven him. ORACLE was not invited. It was monitoring the party for anomalies.</p>
+          <a href="#" class="n-read">READ</a>
+        </div>
+        <div class="news-mini">
+          <span class="n-cat field" style="margin-bottom:.4rem;">RED_TEAM</span>
+          <div class="n-date">// 2025.11.12</div>
+          <div class="n-title">RED TEAM WINS DEFCON CTF FOR THE THIRD YEAR IN A ROW. RIYA'S SCOREBOARD IS UNDEFEATED.</div>
+          <p style="font-size:.82rem;color:var(--text-dim);margin:.4rem 0;">The scoreboard says "3-0." Riya says "it is fine." We believe her. We are afraid of her. Both are correct.</p>
+          <a href="#" class="n-read">READ</a>
+        </div>
+        <div class="news-mini">
+          <span class="n-cat office" style="margin-bottom:.4rem;">CORPORATE</span>
+          <div class="n-date">// 2025.11.08</div>
+          <div class="n-title">QUARTERLY ALL-HANDS: TOBY FROM HR HAS CONCERNS. SIX WERE VALID. ONE WAS ABOUT THE RUBBER DUCK.</div>
+          <p style="font-size:.82rem;color:var(--text-dim);margin:.4rem 0;">Revenue up 42%. Toby raised 7 compliance concerns. The rubber duck stays. This is now a formal company policy.</p>
+          <a href="#" class="n-read">READ</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- LOWER GRID: 6 more cards -->
+    <div class="news-grid3 reveal d1" style="margin-top:1px;">
+
+      <div class="news-card">
+        <span class="n-cat ai">AI_DIVISION</span>
+        <div class="n-date">// 2025.11.05</div>
+        <div class="n-title">ORACLE v4.2 SHIPS WITH 99.997% DETECTION PRECISION. DR. KOZLOV CALLED THIS "ADEQUATE."</div>
+        <p class="n-excerpt">Standing ovation at the product demo. Dr. Kozlov nodded once and said "adequate for now." Jessica Park has not forgiven him. We have started a countdown.</p>
+        <a href="#" class="n-read">READ BRIEF</a>
+      </div>
+
+      <div class="news-card">
+        <span class="n-cat crypto">QUANTUM</span>
+        <div class="n-date">// 2025.10.28</div>
+        <div class="n-title">40 NEW CLIENTS DEPLOYED POST-QUANTUM ENCRYPTION THIS QUARTER. HERE IS WHY NOW MATTERS.</div>
+        <p class="n-excerpt">Harvest-now-decrypt-later is not theoretical. Adversaries are collecting your encrypted traffic today with plans to decrypt it in 4-6 years. By then it is too late to act.</p>
+        <a href="#" class="n-read">READ BRIEF</a>
+      </div>
+
+      <div class="news-card">
+        <span class="n-cat breach">THREAT_INTEL</span>
+        <div class="n-date">// 2025.10.15</div>
+        <div class="n-title">TOP 5 ATTACK PATTERNS FROM Q3 2025. WHY MOST COMPANIES STILL ARE NOT PROTECTED.</div>
+        <p class="n-excerpt">AI-assisted phishing. Supply chain compromise. Living-off-the-land binaries. Identity attacks. Ransomware with exfiltration. Five patterns. All predictable. All preventable. Most weren't.</p>
+        <a href="#" class="n-read">READ BRIEF</a>
+      </div>
+
+      <div class="news-card">
+        <span class="n-cat field">FIELD_REPORT</span>
+        <div class="n-date">// 2025.10.02</div>
+        <div class="n-title">HOW WE WALKED INTO A FORTUNE 500 HQ WITH A FAKE ID AND A RASPBERRY PI</div>
+        <p class="n-excerpt">Physical pen test. Client redacted. Findings: two reception desks, zero badge verification, one unlocked server room, seventeen USB ports with no controls. In and out in 4 hours.</p>
+        <a href="#" class="n-read">READ BRIEF</a>
+      </div>
+
+      <div class="news-card">
+        <span class="n-cat corp">COMPANY</span>
+        <div class="n-date">// 2025.09.19</div>
+        <div class="n-title">SINGAPORE OFFICE OPENS. OUR FOURTH LOCATION. CHOSEN BECAUSE THREAT ACTORS DON'T RESPECT TIME ZONES.</div>
+        <p class="n-excerpt">Maya's opening remarks included a global coverage map that was mostly dark. "That's the point," she said. The room understood immediately.</p>
+        <a href="#" class="n-read">READ BRIEF</a>
+      </div>
+
+      <div class="news-card">
+        <span class="n-cat office">INTERNAL</span>
+        <div class="n-date">// 2025.09.05</div>
+        <div class="n-title">THE OFFICE REFRIGERATOR HAS BEEN COMPROMISED. TOBY HAS ISSUED A FORMAL MEMO.</div>
+        <p class="n-excerpt">Someone relabeled all the coffee as DECAF as a social engineering test. Seven engineers reported significant productivity impacts. The red team cannot confirm or deny involvement. They are not denying it.</p>
+        <a href="#" class="n-read">READ BRIEF</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- THREAT TERMINAL (static HTML version) -->
+<section style="background:var(--surface);padding:4rem 0;">
+  <div class="container">
+    <div class="section-tag reveal">LIVE_THREAT_FEED</div>
+    <h2 class="reveal d1" style="color:var(--white);margin-bottom:2rem;">Current <span style="color:var(--red);">Threat Landscape</span></h2>
+    <div class="terminal reveal d2">
+      <div class="terminal-bar">
+        <span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span>
+        <span class="t-title">oracle_threat_feed &mdash; Q4 2025 snapshot</span>
+      </div>
+      <div class="t-line"><span style="color:var(--text-dim);font-size:.7rem;min-width:65px;">03:47:12</span><span style="color:var(--red);font-family:var(--font-mono);font-size:.7rem;min-width:90px;">[CRITICAL]</span><span style="color:var(--cyan);font-family:var(--font-mono);font-size:.7rem;min-width:120px;">ZERO_DAY</span><span style="color:var(--text);font-family:var(--font-mono);font-size:.7rem;">Unauthenticated RCE in Nginx &mdash; CVE-2025-7821 &mdash; patch available</span></div>
+      <div class="t-line"><span style="color:var(--text-dim);font-size:.7rem;min-width:65px;">04:12:08</span><span style="color:#ff8800;font-family:var(--font-mono);font-size:.7rem;min-width:90px;">[HIGH]</span><span style="color:var(--cyan);font-family:var(--font-mono);font-size:.7rem;min-width:120px;">APT</span><span style="color:var(--text);font-family:var(--font-mono);font-size:.7rem;">IRON_THRONE lateral movement detected across 3 energy sector clients</span></div>
+      <div class="t-line"><span style="color:var(--text-dim);font-size:.7rem;min-width:65px;">06:33:55</span><span style="color:#ff8800;font-family:var(--font-mono);font-size:.7rem;min-width:90px;">[HIGH]</span><span style="color:var(--cyan);font-family:var(--font-mono);font-size:.7rem;min-width:120px;">RANSOMWARE</span><span style="color:var(--text);font-family:var(--font-mono);font-size:.7rem;">LockBit 4.0 variant targeting healthcare &mdash; 40+ orgs hit this week</span></div>
+      <div class="t-line"><span style="color:var(--text-dim);font-size:.7rem;min-width:65px;">09:18:42</span><span style="color:var(--red);font-family:var(--font-mono);font-size:.7rem;min-width:90px;">[CRITICAL]</span><span style="color:var(--cyan);font-family:var(--font-mono);font-size:.7rem;min-width:120px;">SUPPLY_CHAIN</span><span style="color:var(--text);font-family:var(--font-mono);font-size:.7rem;">Malicious npm package "crypto-utils-pro" &mdash; 2.4M downloads before removal</span></div>
+      <div class="t-line"><span style="color:var(--text-dim);font-size:.7rem;min-width:65px;">11:44:19</span><span style="color:var(--gold);font-family:var(--font-mono);font-size:.7rem;min-width:90px;">[MEDIUM]</span><span style="color:var(--cyan);font-family:var(--font-mono);font-size:.7rem;min-width:120px;">PHISHING</span><span style="color:var(--text);font-family:var(--font-mono);font-size:.7rem;">AI-generated executive impersonation campaign &mdash; 12 clients targeted</span></div>
+      <div class="t-line" style="margin-top:.7rem;">
+        <span class="t-prompt">$</span><span class="t-ok">oracle monitoring &mdash; 2,400,000+ threat vectors active</span>
+        <span class="blink" style="color:var(--green);font-family:var(--font-mono);margin-left:.3rem;">|</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding-bottom:6rem;">
+  <div class="container">
+    <div class="cta-box reveal" data-code="LOG">
+      <div>
+        <div class="section-tag">SUBSCRIBE</div>
+        <h2 style="color:var(--white);">STAY AHEAD OF<br><span style="color:var(--red);">THE THREAT CURVE.</span></h2>
+        <p>Our weekly intelligence digest goes to CISOs at 340+ companies. Zero marketing. Just signals that matter.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="contact.php"   class="btn btn-filled">JOIN INTEL FEED</a>
+        <a href="products.html" class="btn btn-green">SEE SERVICES</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><span class="br">[</span>PARADOX<span class="cur">_</span><span class="br">]</span></div>
+        <p class="footer-tagline">We existed before you knew you needed us.</p>
+        <p class="footer-quote">"Hello, friend." <em>— Mr. Robot S01E01</em></p>
+      </div>
+      <div class="f-col"><h5>// Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="products.html">Services</a></li><li><a href="news.html">News</a></li><li><a href="contact.php">Contact</a></li></ul></div>
+      <div class="f-col"><h5>// Services</h5><ul><li><a href="products.html">Penetration Testing</a></li><li><a href="products.html">AI Defense</a></li><li><a href="products.html">Quantum Encryption</a></li><li><a href="products.html">Dark Web Monitor</a></li></ul></div>
+      <div class="f-col"><h5>// Transmission</h5><p class="f-sub">Encrypted channel. No tracking. No logging.</p><div class="f-email-row"><div class="f-input-wrap"><span class="f-prefix">root@paradox:~$</span><input type="email" placeholder="enter_email" aria-label="Newsletter" /></div><button class="f-btn" type="button">TRANSMIT</button></div></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="f-copy"><span>&copy; 2025 Paradox Systems Inc.</span><span class="f-sep">|</span><span id="uptime">UPTIME: CALCULATING...</span></div>
+      <div class="f-links"><a href="#">PRIVACY</a><a href="#">TERMS</a><a href="#">PGP</a></div>
+    </div>
+    <div class="f-easter" id="easter">// Hello, friend. Hello, friend? That's lame. Maybe I should give you a name.</div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

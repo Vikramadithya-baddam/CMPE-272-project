@@ -1,0 +1,97 @@
+name=Nathan Mercer
+role=Chief Executive Officer
+phone=+1 (415) 308-0101
+email=n.mercer@paradoxsystems.io
+location=San Francisco, CA — HQ
+department=Executive
+---
+name=Priya Kapoor
+role=Chief Technology Officer
+phone=+1 (415) 308-0102
+email=p.kapoor@paradoxsystems.io
+location=San Francisco, CA — HQ
+department=Engineering
+---
+name=Daniel Osei
+role=VP of Engineering
+phone=+1 (415) 308-0103
+email=d.osei@paradoxsystems.io
+location=San Francisco, CA — HQ
+department=Engineering
+---
+name=Sarah Lindqvist
+role=Head of Product Design
+phone=+1 (415) 308-0104
+email=s.lindqvist@paradoxsystems.io
+location=Austin, TX — Remote
+department=Design
+---
+name=Marco Villanueva
+role=Lead Backend Engineer
+phone=+1 (415) 308-0105
+email=m.villanueva@paradoxsystems.io
+location=San Francisco, CA — HQ
+department=Engineering
+---
+name=Yuki Tanaka
+role=Senior Frontend Engineer
+phone=+1 (415) 308-0106
+email=y.tanaka@paradoxsystems.io
+location=Seattle, WA — Remote
+department=Engineering
+---
+name=Aisha Okonkwo
+role=DevOps & Infrastructure Lead
+phone=+1 (415) 308-0107
+email=a.okonkwo@paradoxsystems.io
+location=San Francisco, CA — HQ
+department=Infrastructure
+---
+name=James Harrington
+role=Head of Sales
+phone=+1 (415) 308-0108
+email=j.harrington@paradoxsystems.io
+location=New York, NY — East Office
+department=Sales
+---
+name=Leila Ahmadi
+role=Customer Success Manager
+phone=+1 (415) 308-0109
+email=l.ahmadi@paradoxsystems.io
+location=New York, NY — East Office
+department=Customer Success
+---
+name=Chris Nakamura
+role=Security & Compliance Lead
+phone=+1 (415) 308-0110
+email=c.nakamura@paradoxsystems.io
+location=San Francisco, CA — HQ
+department=Security
+---
+name=Sofia Brennan
+role=Head of Marketing
+phone=+1 (415) 308-0111
+email=s.brennan@paradoxsystems.io
+location=Austin, TX — Remote
+department=Marketing
+---
+name=Rahul Desai
+role=Data Engineering Lead
+phone=+1 (415) 308-0112
+email=r.desai@paradoxsystems.io
+location=San Francisco, CA — HQ
+department=Data
+---
+name=Olivia Hartmann
+role=Technical Support Lead
+phone=+1 (415) 308-0113
+email=o.hartmann@paradoxsystems.io
+location=London, UK — EU Office
+department=Support
+---
+name=Kwame Asante
+role=Platform Reliability Engineer
+phone=+1 (415) 308-0114
+email=k.asante@paradoxsystems.io
+location=San Francisco, CA — HQ
+department=Infrastructure

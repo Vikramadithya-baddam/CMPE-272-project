@@ -1,0 +1,9 @@
+# .dockerignore — keep the Docker image lean
+.git
+.gitignore
+*.md
+README*
+.DS_Store
+Thumbs.db
+node_modules
+*.log
