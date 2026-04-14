@@ -1,3 +1,23 @@
+<?php
+// ============================================================
+// PARADOX SYSTEMS — contact.php
+// Contacts loaded from PostgreSQL (contacts table) via PDO.
+// data/contacts.txt is no longer used.
+// ============================================================
+require_once __DIR__ . '/db_config.php';
+
+// Load all contacts from DB
+$contacts   = [];
+$db_error   = null;
+try {
+    $pdo      = get_db();
+    $stmt     = $pdo->query('SELECT * FROM contacts ORDER BY id ASC');
+    $contacts = $stmt->fetchAll();
+} catch (Exception $e) {
+    $db_error = $e->getMessage();
+}
+$count = count($contacts);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +25,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact — Paradox Systems</title>
   <meta name="description" content="Reach Paradox Systems. Establish an encrypted channel with our security team." />
-  <!-- Disable Cloudflare email obfuscation on this page so mailto: links work correctly -->
-  <meta name="cf-2fa-verify" content="off" />
-  <meta http-equiv="x-cloak" content="1" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23080810'/><text y='72' x='10' font-size='68' fill='%2300ff41' font-family='monospace'>_</text></svg>" />
 </head>
@@ -27,12 +45,14 @@
       <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
     </button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html"    class="nav-link">Home</a></li>
-      <li><a href="about.html"    class="nav-link">About</a></li>
+      <li><a href="index.html"   class="nav-link">Home</a></li>
+      <li><a href="about.html"   class="nav-link">About</a></li>
       <li><a href="products.php" class="nav-link">Products</a></li>
-      <li><a href="news.html"     class="nav-link">News</a></li>
-      <li><a href="contact.php"   class="nav-link active">Contact</a></li>
-      <li><a href="login.php" class="nav-link" style="color:var(--gold);border:1px solid rgba(255,215,0,.25);padding:.4rem .8rem;font-size:.64rem;"><i class="fa-solid fa-lock" style="margin-right:.3rem;font-size:.55rem;"></i>Admin</a></li>
+      <li><a href="news.html"    class="nav-link">News</a></li>
+      <li><a href="contact.php"  class="nav-link active">Contact</a></li>
+      <li><a href="login.php" class="nav-link" style="color:var(--gold);border:1px solid rgba(255,215,0,.25);padding:.4rem .8rem;font-size:.64rem;">
+        <i class="fa-solid fa-lock" style="margin-right:.3rem;font-size:.55rem;"></i>Admin
+      </a></li>
     </ul>
     <div class="nav-status"><span class="status-dot"></span><span id="navStatus">SECURE_CONN</span></div>
   </div>
@@ -53,110 +73,111 @@
   <div class="container">
     <div class="contact-grid">
 
-      <!-- ============================================================
-           LEFT SIDE: Contact offices loaded from contacts.txt via PHP
-           PHP is ONLY used here to read the text file.
-           ============================================================ -->
+      <!-- LEFT: Contacts from PostgreSQL -->
       <div>
-        <div class="section-tag reveal">PERSONNEL &mdash; LOADED FROM contacts.txt</div>
-        <h2 class="reveal d1" style="color:var(--white);margin-bottom:0.5rem;">Our <span style="color:var(--cyan);">People</span></h2>
-        <p class="reveal d2" style="color:var(--text-dim);font-family:var(--font-mono);font-size:0.75rem;margin-bottom:1.5rem;line-height:1.6;">
-          <?php
-            // __DIR__ = absolute path of this file's folder = /var/www/html on Render
-            $file  = __DIR__ . '/data/contacts.txt';
-            $count = 0;
-            if (file_exists($file)) {
-                $blocks = explode('---', file_get_contents($file));
-                foreach ($blocks as $b) { if (trim($b)) $count++; }
-            }
-            echo '// ' . $count . ' team members &mdash; read from data/contacts.txt';
-          ?>
-        </p>
+        <div class="section-tag reveal">PERSONNEL &mdash; LOADED FROM DATABASE</div>
+        <h2 class="reveal d1" style="color:var(--white);margin-bottom:0.5rem;">
+          Our <span style="color:var(--cyan);">People</span>
+        </h2>
 
-        <?php
-        if (file_exists($file)) {
-            $content = file_get_contents($file);
-            $blocks  = explode('---', $content);
+        <!-- Terminal showing DB query -->
+        <div class="terminal reveal d1" style="margin-bottom:1.5rem;">
+          <div class="terminal-bar">
+            <span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span>
+            <span class="t-title">paradox_db — contacts table</span>
+          </div>
+          <div class="t-line">
+            <span class="t-prompt">$</span>
+            <span class="t-cmd">SELECT * FROM contacts ORDER BY id ASC;</span>
+          </div>
+          <?php if ($db_error): ?>
+          <div class="t-line">
+            <span class="t-prompt"> </span>
+            <span class="t-err">ERROR: <?php echo htmlspecialchars($db_error); ?></span>
+          </div>
+          <?php else: ?>
+          <div class="t-line">
+            <span class="t-prompt"> </span>
+            <span class="t-ok"><?php echo $count; ?> rows returned &mdash; rendering below</span>
+          </div>
+          <?php endif; ?>
+        </div>
 
-            echo '<div class="person-list reveal d2">';
+        <?php if ($db_error): ?>
+          <div class="terminal" style="color:var(--red);font-family:var(--font-mono);font-size:.8rem;padding:1rem;border:1px solid rgba(255,0,60,.3);">
+            <p><i class="fa-solid fa-triangle-exclamation"></i> Database error: <?php echo htmlspecialchars($db_error); ?></p>
+            <p style="margin-top:.5rem;color:var(--text-dim);">Check your DB_HOST, DB_NAME, DB_USER, DB_PASS environment variables on Render.</p>
+          </div>
 
-            foreach ($blocks as $block) {
-                $block = trim($block);
-                if (empty($block)) continue;
+        <?php elseif (empty($contacts)): ?>
+          <div class="terminal" style="color:var(--text-dim);font-family:var(--font-mono);font-size:.8rem;padding:1rem;">
+            <p>No contacts found. Run db_setup.sql to seed the contacts table.</p>
+          </div>
 
-                $data = array();
-                foreach (explode("\n", $block) as $line) {
-                    $line = trim($line);
-                    if (empty($line)) continue;
-                    $pos = strpos($line, '=');
-                    if ($pos !== false) {
-                        $key = trim(substr($line, 0, $pos));
-                        $val = trim(substr($line, $pos + 1));
-                        $data[$key] = $val;
-                    }
-                }
-
-                if (empty($data) || empty($data['name'])) continue;
-
-                // Build 2-letter initials from name
-                $parts    = explode(' ', $data['name']);
-                $initials = '';
-                foreach ($parts as $p) {
-                    if (strlen($p) > 0 && ctype_alpha($p[0])) {
-                        $initials .= strtoupper($p[0]);
-                    }
-                }
-                $initials = substr($initials, 0, 2);
-
-                echo '<div class="person-card">';
-                echo '<div class="pc-initials">' . htmlspecialchars($initials) . '</div>';
-                echo '<div class="pc-person-name">' . htmlspecialchars($data['name']) . '</div>';
-
-                if (!empty($data['role'])) {
-                    echo '<div class="pc-role">' . htmlspecialchars($data['role']) . '</div>';
-                }
-                if (!empty($data['department'])) {
-                    echo '<div class="pc-alias">DEPT: ' . htmlspecialchars($data['department']) . '</div>';
-                }
-                if (!empty($data['phone'])) {
-                    echo '<div class="pc-row"><span class="pc-key">PHONE:</span><span class="pc-val"><a href="tel:' . htmlspecialchars($data['phone']) . '">' . htmlspecialchars($data['phone']) . '</a></span></div>';
-                }
-                if (!empty($data['email'])) {
-                    // NOTE: write mailto: as concatenated string so Cloudflare proxy
-                    // cannot obfuscate it when it scans the output HTML
-                    $email = htmlspecialchars($data['email']);
-                    echo '<div class="pc-row"><span class="pc-key">EMAIL:</span><span class="pc-val"><a href="' . 'mailto:' . $email . '">' . $email . '</a></span></div>';
-                }
-                if (!empty($data['location'])) {
-                    echo '<div class="pc-row"><span class="pc-key">LOCATION:</span><span class="pc-val">' . htmlspecialchars($data['location']) . '</span></div>';
-                }
-
-                echo '</div>';
-            }
-
-            echo '</div>';
-
-        } else {
-            echo '<div class="terminal" style="color:var(--red);font-family:var(--font-mono);font-size:.8rem;padding:1rem;">';
-            echo '<p>ERROR: data/contacts.txt not found at: ' . htmlspecialchars($file) . '</p>';
-            echo '</div>';
-        }
-        ?>
+        <?php else: ?>
+          <div class="person-list reveal d2">
+            <?php foreach ($contacts as $person):
+              // Build 2-letter initials
+              $parts    = explode(' ', $person['name']);
+              $initials = '';
+              foreach ($parts as $pt) {
+                  if (strlen($pt) > 0 && ctype_alpha($pt[0])) $initials .= strtoupper($pt[0]);
+              }
+              $initials = substr($initials, 0, 2);
+              $email    = htmlspecialchars($person['email'] ?? '');
+            ?>
+            <div class="person-card">
+              <div class="pc-initials"><?php echo htmlspecialchars($initials); ?></div>
+              <div class="pc-person-name"><?php echo htmlspecialchars($person['name']); ?></div>
+              <?php if (!empty($person['role'])): ?>
+                <div class="pc-role"><?php echo htmlspecialchars($person['role']); ?></div>
+              <?php endif; ?>
+              <?php if (!empty($person['department'])): ?>
+                <div class="pc-alias">DEPT: <?php echo htmlspecialchars($person['department']); ?></div>
+              <?php endif; ?>
+              <?php if (!empty($person['phone'])): ?>
+                <div class="pc-row">
+                  <span class="pc-key">PHONE:</span>
+                  <span class="pc-val">
+                    <a href="tel:<?php echo htmlspecialchars($person['phone']); ?>">
+                      <?php echo htmlspecialchars($person['phone']); ?>
+                    </a>
+                  </span>
+                </div>
+              <?php endif; ?>
+              <?php if (!empty($email)): ?>
+                <div class="pc-row">
+                  <span class="pc-key">EMAIL:</span>
+                  <span class="pc-val">
+                    <a href="<?php echo 'mailto:' . $email; ?>"><?php echo $email; ?></a>
+                  </span>
+                </div>
+              <?php endif; ?>
+              <?php if (!empty($person['location'])): ?>
+                <div class="pc-row">
+                  <span class="pc-key">LOCATION:</span>
+                  <span class="pc-val"><?php echo htmlspecialchars($person['location']); ?></span>
+                </div>
+              <?php endif; ?>
+            </div>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
 
         <!-- General support box -->
-        <div class="alert-box reveal" style="margin-top:1.5rem; border-color:rgba(0,212,255,0.3); background:rgba(0,212,255,0.04);">
+        <div class="alert-box reveal" style="margin-top:1.5rem;border-color:rgba(0,212,255,0.3);background:rgba(0,212,255,0.04);">
           <div class="alert-title" style="color:var(--cyan);">GENERAL INQUIRIES</div>
           <p class="alert-text">
             For sales, partnerships, or press:<br>
-            <a href="/cdn-cgi/l/email-protection#c9a1aca5a5a689b9a8bba8ada6b1bab0babdaca4bae7a0a6" style="color:var(--cyan);"><span class="__cf_email__" data-cfemail="adc5c8c1c1c2edddccdfccc9c2d5ded4ded9c8c0de83c4c2">[email&#160;protected]</span></a><br><br>
+            <a href="mailto:hello@paradoxsystems.io" style="color:var(--cyan);">hello@paradoxsystems.io</a><br><br>
             For technical support or platform issues:<br>
-            <a href="/cdn-cgi/l/email-protection#196a6c6969766b6d5969786b787d76616a606a6d7c746a377076" style="color:var(--cyan);"><span class="__cf_email__" data-cfemail="8dfef8fdfde2fff9cdfdecffece9e2f5fef4fef9e8e0fea3e4e2">[email&#160;protected]</span></a><br><br>
+            <a href="mailto:support@paradoxsystems.io" style="color:var(--cyan);">support@paradoxsystems.io</a><br><br>
             Response time: <span style="color:var(--green);">under 4 business hours.</span>
           </p>
         </div>
       </div>
 
-      <!-- RIGHT SIDE: Contact form (HTML only, no PHP) -->
+      <!-- RIGHT: Contact form -->
       <div class="reveal d2">
         <div class="contact-form">
 
@@ -177,7 +198,7 @@
               <div class="fg"><label for="fname">FIRST NAME</label><input type="text" id="fname" name="fname" placeholder="e.g. Elliot" required /></div>
               <div class="fg"><label for="lname">LAST NAME</label><input type="text" id="lname" name="lname" placeholder="e.g. Alderson" required /></div>
             </div>
-            <div class="fg"><label for="email">EMAIL</label><input type="email" id="email" name="email" placeholder="you@company.com" required /></div>
+            <div class="fg"><label for="femail">EMAIL</label><input type="email" id="femail" name="email" placeholder="you@company.com" required /></div>
             <div class="fg"><label for="company">COMPANY</label><input type="text" id="company" name="company" placeholder="e.g. E Corp, Stark Industries..." /></div>
             <div class="fg">
               <label for="subject">INQUIRY TYPE</label>
@@ -204,10 +225,10 @@
           </form>
 
           <div class="form-ok" id="form-ok">
-            <span style="color:var(--green);">v TRANSMISSION RECEIVED</span><br><br>
+            <span style="color:var(--green);">&#10003; TRANSMISSION RECEIVED</span><br><br>
             // Your message has been received and flagged for priority review.<br>
             // An engineer (not a bot) will respond within 24 hours.<br>
-            // Active breach? Use: <a href="/cdn-cgi/l/email-protection#bcdeced9dddfd4fcccddceddd8d3c4cfc5cfc8d9d1cf92d5d3" style="color:var(--red);"><span class="__cf_email__" data-cfemail="ff9d8d9a9e9c97bf8f9e8d9e9b90878c868c8b9a928cd19690">[email&#160;protected]</span></a>
+            // Active breach? Use: <a href="mailto:breach@paradoxsystems.io" style="color:var(--red);">breach@paradoxsystems.io</a>
           </div>
 
         </div>
@@ -257,12 +278,30 @@
         <p class="footer-tagline">We existed before you knew you needed us.</p>
         <p class="footer-quote">"Hello, friend." <em>— Mr. Robot S01E01</em></p>
       </div>
-      <div class="f-col"><h5>// Navigate</h5><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="products.php">Products</a></li><li><a href="news.html">News</a></li><li><a href="contact.php">Contact</a></li></ul></div>
-      <div class="f-col"><h5>// Products</h5><ul><li><a href="product-pentestpro.php">PenTest Pro</a></li><li><a href="product-oracle-ai.php">ORACLE AI Shield</a></li><li><a href="product-quantumvault.php">QuantumVault</a></li><li><a href="product-darkscan.php">DarkScan</a></li></ul></div>
-      <div class="f-col"><h5>// Transmission</h5><p class="f-sub">Encrypted channel. No tracking. No logging.</p><div class="f-email-row"><div class="f-input-wrap"><span class="f-prefix">root@paradox:~$</span><input type="email" placeholder="enter_email" aria-label="Newsletter" /></div><button class="f-btn" type="button">TRANSMIT</button></div></div>
+      <div class="f-col"><h5>// Navigate</h5><ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="products.php">Products</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="contact.php">Contact</a></li>
+      </ul></div>
+      <div class="f-col"><h5>// Products</h5><ul>
+        <li><a href="product-pentestpro.php">PenTest Pro</a></li>
+        <li><a href="product-oracle-ai.php">ORACLE AI Shield</a></li>
+        <li><a href="product-quantumvault.php">QuantumVault</a></li>
+        <li><a href="product-darkscan.php">DarkScan</a></li>
+      </ul></div>
+      <div class="f-col">
+        <h5>// Transmission</h5>
+        <p class="f-sub">Encrypted channel. No tracking. No logging.</p>
+        <div class="f-email-row">
+          <div class="f-input-wrap"><span class="f-prefix">root@paradox:~$</span><input type="email" placeholder="enter_email" aria-label="Newsletter" /></div>
+          <button class="f-btn" type="button">TRANSMIT</button>
+        </div>
+      </div>
     </div>
     <div class="footer-bottom">
-      <div class="f-copy"><span>&copy; 2025 Paradox Systems Inc.</span><span class="f-sep">|</span><span id="uptime">UPTIME: CALCULATING...</span></div>
+      <div class="f-copy"><span>&copy; <?php echo date('Y'); ?> Paradox Systems Inc.</span><span class="f-sep">|</span><span id="uptime">UPTIME: CALCULATING...</span></div>
       <div class="f-links"><a href="#">PRIVACY</a><a href="#">TERMS</a><a href="#">PGP</a></div>
     </div>
     <div class="f-easter" id="easter">// Hello, friend. Hello, friend? That's lame. Maybe I should give you a name.</div>

@@ -14,39 +14,19 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 }
 
-// ── Read users from data/users.txt ───────────────────────────
-function load_users($filepath) {
-    if (!file_exists($filepath)) return [];
+// ── Read users from PostgreSQL ────────────────────────────────
+require_once __DIR__ . '/db_config.php';
 
-    $content = file_get_contents($filepath);
-    $blocks  = explode('---', $content);
-    $users   = [];
-
-    foreach ($blocks as $block) {
-        $block = trim($block);
-        if (empty($block)) continue;
-
-        $u = [];
-        foreach (explode("\n", $block) as $line) {
-            $line = trim($line);
-            if (empty($line)) continue;
-            $pos = strpos($line, '=');
-            if ($pos !== false) {
-                $key = trim(substr($line, 0, $pos));
-                $val = trim(substr($line, $pos + 1));
-                $u[$key] = $val;
-            }
-        }
-        if (!empty($u['name'])) $users[] = $u;
-    }
-    return $users;
+$users    = [];
+$db_error = null;
+try {
+    $pdo   = get_db();
+    $stmt  = $pdo->query('SELECT id, name, email, role, joined::text AS joined, status FROM users ORDER BY id ASC');
+    $users = $stmt->fetchAll();
+} catch (Exception $e) {
+    $db_error = $e->getMessage();
+    error_log('secure.php DB error: ' . $e->getMessage());
 }
-
-$users_file = dirname(__FILE__) . '/data/users.txt';
-if (!file_exists($users_file)) {
-    $users_file = $_SERVER['DOCUMENT_ROOT'] . '/data/users.txt';
-}
-$users = load_users($users_file);
 
 // ── Stats ─────────────────────────────────────────────────────
 $total    = count($users);
@@ -376,7 +356,7 @@ $login_time = date('Y-m-d H:i:s', time());
           </div>
           <p class="sh-sub">
             <i class="fa-solid fa-database"></i>
-            Loaded from data/users.txt &mdash; PHP file_get_contents()
+            Loaded from PostgreSQL &mdash; paradox_db.users
           </p>
         </div>
         <div style="font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim);text-align:right;line-height:1.8;">
@@ -462,7 +442,7 @@ $login_time = date('Y-m-d H:i:s', time());
               <td colspan="6">
                 <div class="empty-state">
                   <i class="fa-solid fa-database"></i>
-                  No users found in data/users.txt
+                  No users found in the database. Run db_setup.sql to seed data.
                 </div>
               </td>
             </tr>
@@ -524,7 +504,7 @@ $login_time = date('Y-m-d H:i:s', time());
         <div class="log-line">
           <span class="log-ts"><?php echo date('Y-m-d H:i:s'); ?></span>
           <span class="log-lvl ok">[READ]</span>
-          <span class="log-msg">data/users.txt loaded — <?php echo $total; ?> records parsed.</span>
+          <span class="log-msg">PostgreSQL users table queried — <?php echo $total; ?> records returned.</span>
         </div>
         <div class="log-line">
           <span class="log-ts"><?php echo date('Y-m-d H:i:s'); ?></span>

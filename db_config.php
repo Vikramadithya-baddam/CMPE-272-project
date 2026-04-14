@@ -1,29 +1,25 @@
 <?php
 // ============================================================
 // PARADOX SYSTEMS — db_config.php
-// PostgreSQL connection via PDO.
-// Reads credentials from Render Environment Variables — never
-// hardcode credentials in source code.
+// Shared PostgreSQL connection via PDO.
+// Place in project root. Include with: require_once 'db_config.php';
 //
-// 
-//  Render Dashboard → your PHP Web Service → Environment
-//  Add these key/value pairs (copy from your DB's "Connections" tab):
-//
-//   DB_HOST   = dpg-xxxxxxxxxx-a.oregon-postgres.render.com
-//   DB_PORT   = 5432
-//   DB_NAME   = paradox_db
-//   DB_USER   = paradox_db_user
-//   DB_PASS   = <your password>
+// Set these on Render → your PHP service → Environment:
+//   DB_HOST = your-db-host.render.com
+//   DB_PORT = 5432
+//   DB_NAME = paradox_db
+//   DB_USER = paradox_db_user
+//   DB_PASS = your_password
 // ============================================================
 
 function get_db(): PDO {
     static $pdo = null;
     if ($pdo !== null) return $pdo;
 
-    $host = getenv('DB_HOST') ?: 'dpg-d7c2vfhkh4rs73cdcan0-a';
+    $host = getenv('DB_HOST') ?: 'localhost';
     $port = getenv('DB_PORT') ?: '5432';
-    $name = getenv('DB_NAME') ?: 'pardoxsys_db';
-    $user = getenv('DB_USER') ?: 'users_db_meo6_user';
+    $name = getenv('DB_NAME') ?: 'paradox_db';
+    $user = getenv('DB_USER') ?: 'postgres';
     $pass = getenv('DB_PASS') ?: '';
 
     $dsn = "pgsql:host={$host};port={$port};dbname={$name};sslmode=require";
@@ -35,7 +31,6 @@ function get_db(): PDO {
             PDO::ATTR_EMULATE_PREPARES   => false,
         ]);
     } catch (PDOException $e) {
-        // In production don't expose details — log and show generic error
         error_log('DB connection failed: ' . $e->getMessage());
         http_response_code(500);
         die(json_encode(['error' => 'Database connection failed']));
