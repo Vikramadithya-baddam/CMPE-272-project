@@ -8,6 +8,7 @@ FROM php:8.2-apache
 
 # Enable Apache mod_rewrite (needed for clean URLs if added later)
 RUN a2enmod rewrite
+RUN apk add --no-cache libpq-dev && docker-php-ext-install pdo pdo_pgsql psql
 
 # Set Apache to read the PORT env variable that Render injects at runtime.
 # Render routes external traffic → container's $PORT (default 10000).
