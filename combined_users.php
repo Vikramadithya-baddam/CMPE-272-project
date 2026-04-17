@@ -33,7 +33,7 @@ function fetch_local_users(): array {
             'source'     => 'PostgreSQL (Render)',
             'users'      => $users,
             'error'      => null,
-                'time'       => $time,
+            'time'       => $time,
         ];
     } catch (Exception $e) {
         return [
