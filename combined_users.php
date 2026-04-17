@@ -33,6 +33,7 @@ function fetch_local_users(): array {
             'source'     => 'PostgreSQL (Render)',
             'users'      => $users,
             'error'      => null,
+                'time'       => $time,
         ];
     } catch (Exception $e) {
         return [
@@ -56,29 +57,58 @@ function fetch_nullcastle_users(): array {
     curl_setopt_array($ch, [
         CURLOPT_URL            => NULLCASTLE_URL,
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT        => 10,
-        CURLOPT_CONNECTTIMEOUT => 5,
-        CURLOPT_SSL_VERIFYPEER => true,
-        CURLOPT_HTTPHEADER     => ['Accept: application/json'],
-        CURLOPT_USERAGENT      => 'ParadoxSystems/1.0',
+        CURLOPT_TIMEOUT        => 30,       // Render free tier can take 20s+ to cold start
+        CURLOPT_CONNECTTIMEOUT => 20,       // give it time to wake up
+        CURLOPT_SSL_VERIFYPEER => false,    // skip SSL cert check (avoids cert chain issues)
+        CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_FOLLOWLOCATION => true,     // follow any redirects
+        CURLOPT_MAXREDIRS      => 3,
+        CURLOPT_HTTPHEADER     => [
+            'Accept: application/json',
+            'User-Agent: ParadoxSystems/1.0',
+        ],
     ]);
     $raw   = curl_exec($ch);
     $error = curl_error($ch);
     $code  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $time  = round(curl_getinfo($ch, CURLINFO_TOTAL_TIME), 2);
     curl_close($ch);
 
-    if ($error || $code !== 200) {
+    if ($raw === false || $error) {
         return [
             'company'    => 'NullCastle',
             'company_id' => 'nullcastle',
             'color'      => 'cyan',
             'source'     => 'PostgreSQL (Render) via CURL',
             'users'      => [],
-            'error'      => $error ?: "HTTP {$code}",
+            'error'      => "CURL error after {$time}s: {$error}",
+            'time'       => $time,
+        ];
+    }
+    if ($code !== 200) {
+        return [
+            'company'    => 'NullCastle',
+            'company_id' => 'nullcastle',
+            'color'      => 'cyan',
+            'source'     => 'PostgreSQL (Render) via CURL',
+            'users'      => [],
+            'error'      => "HTTP {$code} (took {$time}s)",
+            'time'       => $time,
+        ];
+    }
+    $data = json_decode($raw, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return [
+            'company'    => 'NullCastle',
+            'company_id' => 'nullcastle',
+            'color'      => 'cyan',
+            'source'     => 'PostgreSQL (Render) via CURL',
+            'users'      => [],
+            'error'      => 'Invalid JSON: ' . json_last_error_msg(),
+            'time'       => $time,
         ];
     }
 
-    $data      = json_decode($raw, true);
     $raw_users = $data['users'] ?? [];
 
     // Normalize their fields to the common shape used in the table
@@ -99,6 +129,7 @@ function fetch_nullcastle_users(): array {
         'source'     => 'PostgreSQL (Render) via CURL',
         'users'      => $users,
         'error'      => null,
+        'time'       => $time,
     ];
 }
 
