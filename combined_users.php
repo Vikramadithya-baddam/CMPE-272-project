@@ -163,14 +163,15 @@ $total_users = count($all_users);
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23060611'/><text y='72' x='10' font-size='68' fill='%2300ff41' font-family='monospace'>_</text></svg>" />
   <style>
+    /* Summary stat cards */
     .company-cards { display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
-                     background:var(--border);border:1px solid var(--border);margin-bottom:2.5rem; }
+                     background:var(--border);border:1px solid var(--border);margin-bottom:3rem; }
     .co-card { background:var(--bg2);padding:1.6rem 1.8rem;position:relative;overflow:hidden; }
     .co-card::before { content:'';position:absolute;top:0;left:0;right:0;height:2px; }
     .co-card.green::before { background:linear-gradient(90deg,transparent,var(--green),transparent); }
     .co-card.cyan::before  { background:linear-gradient(90deg,transparent,var(--cyan),transparent); }
-    .co-name  { font-family:var(--font-head);font-size:.85rem;color:var(--white);letter-spacing:.06em;margin-bottom:.3rem; }
-    .co-count { font-family:var(--font-mono);font-size:2.2rem;line-height:1;margin-bottom:.25rem; }
+    .co-name   { font-family:var(--font-head);font-size:.85rem;color:var(--white);letter-spacing:.06em;margin-bottom:.3rem; }
+    .co-count  { font-family:var(--font-mono);font-size:2.2rem;line-height:1;margin-bottom:.25rem; }
     .co-count.green { color:var(--green);text-shadow:0 0 16px rgba(0,255,65,.3); }
     .co-count.cyan  { color:var(--cyan); text-shadow:0 0 16px rgba(0,212,255,.3); }
     .co-source { font-family:var(--font-mono);font-size:.63rem;color:var(--text-dim);margin-bottom:.4rem; }
@@ -178,18 +179,38 @@ $total_users = count($all_users);
     .co-status.ok  { color:var(--green); }
     .co-status.err { color:var(--red); }
 
-    .filter-bar { display:flex;gap:.8rem;margin-bottom:1.2rem;flex-wrap:wrap;align-items:center; }
-    .filter-bar input,.filter-bar select {
-      background:var(--bg2);border:1px solid var(--border);color:var(--text);
-      font-family:var(--font-mono);font-size:.75rem;padding:.55rem .9rem;outline:none;
-      transition:border-color .3s;
+    /* Per-company table block */
+    .co-table-block { margin-bottom:3.5rem; }
+    .co-table-header {
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;
+      padding:1rem 1.2rem;
+      border:1px solid var(--border);border-bottom:none;
+      background:var(--surface2);
     }
-    .filter-bar input { flex:1;min-width:200px; }
-    .filter-bar input:focus,.filter-bar select:focus { border-color:var(--green); }
-    .count-badge { font-family:var(--font-mono);font-size:.7rem;color:var(--text-dim);
-                   margin-left:auto;white-space:nowrap; }
-    .count-badge b { color:var(--green); }
+    .co-table-header.green { border-top:2px solid var(--green); }
+    .co-table-header.cyan  { border-top:2px solid var(--cyan); }
+    .co-table-title {
+      font-family:var(--font-head);font-size:.9rem;color:var(--white);
+      letter-spacing:.07em;display:flex;align-items:center;gap:.6rem;
+    }
+    .co-table-title i { font-size:.8rem; }
+    .co-table-title i.green { color:var(--green); }
+    .co-table-title i.cyan  { color:var(--cyan); }
+    .co-table-meta { font-family:var(--font-mono);font-size:.65rem;color:var(--text-dim);
+                     display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap; }
+    .co-table-meta .pill { padding:.15rem .55rem;border:1px solid;font-size:.6rem; }
+    .co-table-meta .pill.green { color:var(--green);border-color:rgba(0,255,65,.3);background:rgba(0,255,65,.05); }
+    .co-table-meta .pill.cyan  { color:var(--cyan); border-color:rgba(0,212,255,.3);background:rgba(0,212,255,.05); }
 
+    /* Search within each table */
+    .tbl-search {
+      background:var(--bg2);border:1px solid var(--border);color:var(--text);
+      font-family:var(--font-mono);font-size:.72rem;padding:.4rem .8rem;
+      outline:none;transition:border-color .3s;min-width:200px;
+    }
+    .tbl-search:focus { border-color:var(--green); }
+
+    /* Tables */
     .users-wrap { overflow-x:auto;border:1px solid var(--border); }
     table { width:100%;border-collapse:collapse; }
     thead tr { background:var(--surface2); }
@@ -201,17 +222,18 @@ $total_users = count($all_users);
     tbody tr:hover td { background:var(--surface); }
     tbody tr:last-child td { border-bottom:none; }
     .td-dim { color:var(--text-dim);font-size:.72rem; }
+    .td-name { color:var(--white);font-weight:600; }
 
-    .src-pill { font-size:.6rem;letter-spacing:.1em;padding:.15rem .55rem;border:1px solid;
-                display:inline-flex;align-items:center;gap:.3rem;white-space:nowrap; }
-    .src-pill.green { color:var(--green);border-color:rgba(0,255,65,.3); background:rgba(0,255,65,.05); }
-    .src-pill.cyan  { color:var(--cyan); border-color:rgba(0,212,255,.3);background:rgba(0,212,255,.05); }
-
+    /* Status badges */
     .status-badge { font-size:.6rem;letter-spacing:.08em;padding:.15rem .55rem;
                     display:inline-flex;align-items:center;gap:.3rem;border:1px solid; }
     .status-badge.active    { color:var(--green);border-color:rgba(0,255,65,.3); background:rgba(0,255,65,.05); }
     .status-badge.inactive  { color:var(--red);  border-color:rgba(255,0,60,.3); background:rgba(255,0,60,.05); }
     .status-badge.suspended { color:var(--gold); border-color:rgba(255,215,0,.3);background:rgba(255,215,0,.05); }
+
+    /* Empty / error states */
+    .tbl-empty { text-align:center;padding:3rem;color:var(--text-dim);font-family:var(--font-mono);font-size:.78rem; }
+    .tbl-empty i { font-size:2rem;display:block;margin-bottom:1rem;opacity:.3; }
 
     @media(max-width:600px){ .company-cards{ grid-template-columns:1fr; } }
   </style>
@@ -224,10 +246,11 @@ $total_users = count($all_users);
   <div class="grid-bg"></div>
   <div class="container">
     <p class="eyebrow"><i class="fa-solid fa-users"></i> COMBINED_USERS — GROUP LAB</p>
-    <h1 style="color:var(--white);">ALL COMPANY <span style="color:var(--green);">USERS</span></h1>
+    <h1 style="color:var(--white);">COMBINED <span style="color:var(--green);">USERS</span></h1>
     <p class="sub">
-      Paradox Systems users from local PostgreSQL.
-      NullCastle users fetched live via CURL from their hosted API.
+      A combined list of users from both companies. Paradox Systems users are read directly
+      from our PostgreSQL database. NullCastle users are fetched live via CURL from their
+      hosted API endpoint.
     </p>
   </div>
 </div>
@@ -243,14 +266,14 @@ $total_users = count($all_users);
     </div>
     <div class="t-line">
       <span class="t-prompt">$</span>
-      <span class="t-cmd">SELECT * FROM users ORDER BY id; <span style="color:var(--text-dim);">-- local PostgreSQL</span></span>
+      <span class="t-cmd">SELECT * FROM users ORDER BY id; <span style="color:var(--text-dim);">-- Paradox PostgreSQL</span></span>
     </div>
     <div class="t-line">
       <span class="t-prompt"> </span>
       <?php if ($companies[0]['error']): ?>
         <span class="t-err">ERROR: <?php echo htmlspecialchars($companies[0]['error']); ?></span>
       <?php else: ?>
-        <span class="t-ok"><?php echo count($companies[0]['users']); ?> rows — Paradox Systems (PostgreSQL, Render)</span>
+        <span class="t-ok"><?php echo count($companies[0]['users']); ?> rows returned — Paradox Systems</span>
       <?php endif; ?>
     </div>
     <div class="t-line">
@@ -262,16 +285,16 @@ $total_users = count($all_users);
       <?php if ($companies[1]['error']): ?>
         <span class="t-err">ERROR: <?php echo htmlspecialchars($companies[1]['error']); ?></span>
       <?php else: ?>
-        <span class="t-ok"><?php echo count($companies[1]['users']); ?> rows — NullCastle (PostgreSQL, Render) via CURL</span>
+        <span class="t-ok"><?php echo count($companies[1]['users']); ?> rows returned — NullCastle</span>
       <?php endif; ?>
     </div>
     <div class="t-line">
       <span class="t-prompt"> </span>
-      <span class="t-out">total: <?php echo $total_users; ?> users merged and displayed below</span>
+      <span class="t-out">total: <?php echo $total_users; ?> users across both companies</span>
     </div>
   </div>
 
-  <!-- Company cards -->
+  <!-- Summary cards -->
   <div class="company-cards reveal">
     <?php foreach ($companies as $co): ?>
     <div class="co-card <?php echo $co['color']; ?>">
@@ -283,101 +306,119 @@ $total_users = count($all_users);
         <?php echo htmlspecialchars($co['source']); ?>
       </div>
       <?php if ($co['error']): ?>
-        <div class="co-status err">
-          <i class="fa-solid fa-circle-xmark"></i> <?php echo htmlspecialchars($co['error']); ?>
-        </div>
+        <div class="co-status err"><i class="fa-solid fa-circle-xmark"></i> <?php echo htmlspecialchars($co['error']); ?></div>
       <?php else: ?>
-        <div class="co-status ok">
-          <i class="fa-solid fa-circle-check"></i> Connected
-        </div>
+        <div class="co-status ok"><i class="fa-solid fa-circle-check"></i> Connected</div>
       <?php endif; ?>
     </div>
     <?php endforeach; ?>
   </div>
 
-  <!-- Filters -->
-  <div class="filter-bar reveal">
-    <input type="text" id="srch" placeholder="Search name, email, role..." oninput="filterTable()" />
-    <select id="coFilter" onchange="filterTable()">
-      <option value="">All companies</option>
-      <?php foreach ($companies as $co): ?>
-        <option value="<?php echo htmlspecialchars($co['company_id']); ?>">
-          <?php echo htmlspecialchars($co['company']); ?>
-        </option>
-      <?php endforeach; ?>
-    </select>
-    <select id="statusFilter" onchange="filterTable()">
-      <option value="">All statuses</option>
-      <option value="Active">Active</option>
-      <option value="Inactive">Inactive</option>
-      <option value="ACTIVE">ACTIVE</option>
-      <option value="SUSPENDED">SUSPENDED</option>
-    </select>
-    <span class="count-badge" id="countBadge">
-      Showing <b><?php echo $total_users; ?></b> of <?php echo $total_users; ?> users
-    </span>
-  </div>
+  <!-- ── One table per company ── -->
+  <?php foreach ($companies as $idx => $co):
+    $color    = $co['color'];
+    $tbl_id   = 'tbl_' . $co['company_id'];
+    $srch_id  = 'srch_' . $co['company_id'];
+    $cnt_id   = 'cnt_' . $co['company_id'];
+    $co_users = $co['users'];
+    $co_count = count($co_users);
+    // Paradox has no department column — NullCastle does
+    $show_dept = ($co['company_id'] === 'nullcastle');
+  ?>
+  <div class="co-table-block reveal">
 
-  <!-- Combined table -->
-  <div class="users-wrap reveal d1">
-    <table id="usersTable">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th><i class="fa-solid fa-user" style="font-size:.55rem;margin-right:.3rem;"></i>Name</th>
-          <th><i class="fa-solid fa-envelope" style="font-size:.55rem;margin-right:.3rem;"></i>Email</th>
-          <th><i class="fa-solid fa-id-badge" style="font-size:.55rem;margin-right:.3rem;"></i>Role</th>
-          <th><i class="fa-solid fa-building" style="font-size:.55rem;margin-right:.3rem;"></i>Dept</th>
-          <th><i class="fa-solid fa-calendar" style="font-size:.55rem;margin-right:.3rem;"></i>Joined</th>
-          <th><i class="fa-solid fa-signal" style="font-size:.55rem;margin-right:.3rem;"></i>Status</th>
-          <th><i class="fa-solid fa-network-wired" style="font-size:.55rem;margin-right:.3rem;"></i>Source</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php if (empty($all_users)): ?>
-          <tr>
-            <td colspan="8" style="text-align:center;padding:3rem;color:var(--text-dim);">
-              <i class="fa-solid fa-database" style="font-size:2rem;display:block;margin-bottom:1rem;opacity:.3;"></i>
-              No users found. Check your database connection and CURL endpoint.
-            </td>
-          </tr>
-        <?php else: ?>
-          <?php $rn = 1; foreach ($all_users as $u):
-            $status    = $u['status'] ?? 'Active';
-            $status_lc = strtolower($status);
-            $color     = $u['_color'];
-          ?>
-          <tr data-name="<?php echo htmlspecialchars(strtolower($u['name'] ?? '')); ?>"
-              data-email="<?php echo htmlspecialchars(strtolower($u['email'] ?? '')); ?>"
-              data-role="<?php echo htmlspecialchars(strtolower($u['role'] ?? '')); ?>"
-              data-company="<?php echo htmlspecialchars($u['_company_id']); ?>"
-              data-status="<?php echo htmlspecialchars($status); ?>">
-            <td class="td-dim">#<?php echo str_pad($rn++, 2, '0', STR_PAD_LEFT); ?></td>
-            <td style="color:var(--white);font-weight:600;"><?php echo htmlspecialchars($u['name'] ?? '—'); ?></td>
-            <td class="td-dim"><?php echo htmlspecialchars($u['email'] ?? '—'); ?></td>
-            <td><?php echo htmlspecialchars($u['role'] ?? '—'); ?></td>
-            <td class="td-dim"><?php echo htmlspecialchars($u['department'] ?: '—'); ?></td>
-            <td class="td-dim"><?php echo htmlspecialchars($u['joined'] ?? '—'); ?></td>
-            <td>
-              <span class="status-badge <?php echo $status_lc; ?>">
-                <i class="fa-solid <?php echo in_array($status_lc, ['active']) ? 'fa-circle' : 'fa-circle-xmark'; ?>"
-                   style="font-size:.45rem;"></i>
-                <?php echo htmlspecialchars($status); ?>
-              </span>
-            </td>
-            <td>
-              <span class="src-pill <?php echo $color; ?>">
-                <i class="fa-solid <?php echo $color === 'green' ? 'fa-database' : 'fa-network-wired'; ?>"
-                   style="font-size:.55rem;"></i>
-                <?php echo htmlspecialchars($u['_company']); ?>
-              </span>
-            </td>
-          </tr>
-          <?php endforeach; ?>
+    <!-- Table header with title + search -->
+    <div class="co-table-header <?php echo $color; ?>">
+      <div class="co-table-title">
+        <i class="fa-solid <?php echo $color === 'green' ? 'fa-database' : 'fa-network-wired'; ?> <?php echo $color; ?>"></i>
+        <?php echo htmlspecialchars($co['company']); ?>
+      </div>
+      <div class="co-table-meta">
+        <span class="pill <?php echo $color; ?>">
+          <?php echo $co_count; ?> users
+        </span>
+        <span><?php echo htmlspecialchars($co['source']); ?></span>
+        <?php if ($co['error']): ?>
+          <span style="color:var(--red);"><i class="fa-solid fa-triangle-exclamation"></i> <?php echo htmlspecialchars($co['error']); ?></span>
         <?php endif; ?>
-      </tbody>
-    </table>
+        <input
+          class="tbl-search"
+          id="<?php echo $srch_id; ?>"
+          placeholder="Search <?php echo htmlspecialchars($co['company']); ?>..."
+          oninput="filterSingleTable('<?php echo $tbl_id; ?>','<?php echo $srch_id; ?>','<?php echo $cnt_id; ?>',<?php echo $co_count; ?>)"
+        />
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="users-wrap">
+      <table id="<?php echo $tbl_id; ?>">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th><i class="fa-solid fa-user" style="font-size:.55rem;margin-right:.3rem;"></i>Name</th>
+            <th><i class="fa-solid fa-envelope" style="font-size:.55rem;margin-right:.3rem;"></i>Email</th>
+            <th><i class="fa-solid fa-id-badge" style="font-size:.55rem;margin-right:.3rem;"></i>Role</th>
+            <?php if ($show_dept): ?>
+            <th><i class="fa-solid fa-building" style="font-size:.55rem;margin-right:.3rem;"></i>Dept</th>
+            <?php endif; ?>
+            <th><i class="fa-solid fa-calendar" style="font-size:.55rem;margin-right:.3rem;"></i>Joined</th>
+            <th><i class="fa-solid fa-signal" style="font-size:.55rem;margin-right:.3rem;"></i>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if ($co['error']): ?>
+            <tr>
+              <td colspan="<?php echo $show_dept ? 7 : 6; ?>" class="tbl-empty">
+                <i class="fa-solid fa-circle-xmark"></i>
+                Could not load users: <?php echo htmlspecialchars($co['error']); ?>
+              </td>
+            </tr>
+          <?php elseif (empty($co_users)): ?>
+            <tr>
+              <td colspan="<?php echo $show_dept ? 7 : 6; ?>" class="tbl-empty">
+                <i class="fa-solid fa-database"></i>
+                No users found.
+              </td>
+            </tr>
+          <?php else: ?>
+            <?php foreach ($co_users as $rn => $u):
+              $status    = $u['status'] ?? 'Active';
+              $status_lc = strtolower($status);
+            ?>
+            <tr data-name="<?php echo htmlspecialchars(strtolower($u['name'] ?? '')); ?>"
+                data-email="<?php echo htmlspecialchars(strtolower($u['email'] ?? '')); ?>"
+                data-role="<?php echo htmlspecialchars(strtolower($u['role'] ?? '')); ?>">
+              <td class="td-dim">#<?php echo str_pad($rn + 1, 2, '0', STR_PAD_LEFT); ?></td>
+              <td class="td-name"><?php echo htmlspecialchars($u['name'] ?? '—'); ?></td>
+              <td class="td-dim"><?php echo htmlspecialchars($u['email'] ?? '—'); ?></td>
+              <td><?php echo htmlspecialchars($u['role'] ?? '—'); ?></td>
+              <?php if ($show_dept): ?>
+              <td class="td-dim"><?php echo htmlspecialchars($u['department'] ?: '—'); ?></td>
+              <?php endif; ?>
+              <td class="td-dim"><?php echo htmlspecialchars($u['joined'] ?? '—'); ?></td>
+              <td>
+                <span class="status-badge <?php echo $status_lc; ?>">
+                  <i class="fa-solid <?php echo $status_lc === 'active' ? 'fa-circle' : 'fa-circle-xmark'; ?>"
+                     style="font-size:.45rem;"></i>
+                  <?php echo htmlspecialchars($status); ?>
+                </span>
+              </td>
+            </tr>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Row count under each table -->
+    <div style="font-family:var(--font-mono);font-size:.65rem;color:var(--text-dim);
+                padding:.6rem 1rem;border:1px solid var(--border);border-top:none;background:var(--surface2);">
+      <span id="<?php echo $cnt_id; ?>">Showing <b style="color:var(--<?php echo $color; ?>);"><?php echo $co_count; ?></b> of <?php echo $co_count; ?> users</span>
+    </div>
+
   </div>
+  <?php endforeach; ?>
 
 </div>
 </section>
@@ -385,23 +426,23 @@ $total_users = count($all_users);
 <?php include '_footer.php'; ?>
 
 <script>
-function filterTable() {
-  const q  = document.getElementById('srch').value.toLowerCase();
-  const co = document.getElementById('coFilter').value;
-  const st = document.getElementById('statusFilter').value;
-  const rows = document.querySelectorAll('#usersTable tbody tr[data-name]');
+function filterSingleTable(tblId, srchId, cntId, total) {
+  const q    = document.getElementById(srchId).value.toLowerCase();
+  const rows = document.querySelectorAll('#' + tblId + ' tbody tr[data-name]');
   let visible = 0;
   rows.forEach(r => {
-    const show = (!q  || r.dataset.name.includes(q)
-                      || r.dataset.email.includes(q)
-                      || r.dataset.role.includes(q))
-              && (!co || r.dataset.company === co)
-              && (!st || r.dataset.status  === st);
+    const show = !q
+      || r.dataset.name.includes(q)
+      || r.dataset.email.includes(q)
+      || r.dataset.role.includes(q);
     r.style.display = show ? '' : 'none';
     if (show) visible++;
   });
-  document.getElementById('countBadge').innerHTML =
-    'Showing <b>' + visible + '</b> of <?php echo $total_users; ?> users';
+  const color = document.querySelector('#' + tblId)
+                  .closest('.co-table-block')
+                  .querySelector('.co-table-title i').classList.contains('green') ? 'green' : 'cyan';
+  document.getElementById(cntId).innerHTML =
+    'Showing <b style="color:var(--' + color + ');">' + visible + '</b> of ' + total + ' users';
 }
 </script>
 </body>
