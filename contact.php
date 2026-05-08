@@ -50,6 +50,7 @@ $count = count($contacts);
       <li><a href="products.php" class="nav-link">Products</a></li>
       <li><a href="news.html"    class="nav-link">News</a></li>
       <li><a href="contact.php"  class="nav-link active">Contact</a></li>
+      <li><a href="users.php" class="nav-link">Users</a></li>
       <li><a href="login.php" class="nav-link" style="color:var(--gold);border:1px solid rgba(255,215,0,.25);padding:.4rem .8rem;font-size:.64rem;">
         <i class="fa-solid fa-lock" style="margin-right:.3rem;font-size:.55rem;"></i>Admin
       </a></li>
