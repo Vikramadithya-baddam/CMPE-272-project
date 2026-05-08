@@ -20,6 +20,7 @@ $active_page = $active_page ?? 'products';
       <li><a href="products.php"  class="nav-link <?php echo $active_page==='products'?'active':''; ?>">Products</a></li>
       <li><a href="news.html"     class="nav-link <?php echo $active_page==='news'    ?'active':''; ?>">News</a></li>
       <li><a href="contact.php"   class="nav-link <?php echo $active_page==='contact' ?'active':''; ?>">Contact</a></li>
+      <li><a href="users.php"     class="nav-link <?php echo $active_page==='users'   ?'active':''; ?>">Users</a></li>
       <li><a href="login.php" class="nav-link" style="color:var(--gold);border:1px solid rgba(255,215,0,.25);padding:.4rem .8rem;font-size:.64rem;"><i class="fa-solid fa-lock" style="margin-right:.3rem;font-size:.55rem;"></i>Admin</a></li>
     </ul>
     <div class="nav-status"><span class="status-dot"></span><span id="navStatus">SECURE_CONN</span></div>
