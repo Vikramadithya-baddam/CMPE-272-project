@@ -15,6 +15,15 @@ if (!defined('MP_HUB_BASE')) {
     }
 }
 if (!defined('MP_HUB_BASE')) {
+    $fromEnv = getenv('MP_HUB_BASE');
+    if ($fromEnv === false || $fromEnv === '') {
+        $fromEnv = (string) ($_SERVER['MP_HUB_BASE'] ?? '');
+    }
+    if ($fromEnv !== '') {
+        define('MP_HUB_BASE', rtrim($fromEnv, '/'));
+    }
+}
+if (!defined('MP_HUB_BASE')) {
     define('MP_HUB_BASE', 'http://localhost/marketplace/marketplace-hub/public');
 }
 
