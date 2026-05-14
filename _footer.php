@@ -48,5 +48,10 @@
 </footer>
 
 <script src="js/main.js" defer></script>
+<?php
+require_once __DIR__ . '/marketplace-config.php';
+$__mp = isset($MP_PRODUCT) ? (string) $MP_PRODUCT : '__site__';
+echo mp_script_tag(MP_SITE_ID, $__mp);
+?>
 </body>
 </html>

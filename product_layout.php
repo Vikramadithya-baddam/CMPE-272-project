@@ -270,4 +270,7 @@ $c = $colors[$p['cat_color']] ?? $colors['green'];
   </div>
 </section>
 
-<?php include '_footer.php'; ?>
+<?php
+$MP_PRODUCT = $p['slug'];
+include '_footer.php';
+?>
